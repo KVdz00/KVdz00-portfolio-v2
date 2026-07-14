@@ -1,0 +1,10 @@
+node_modules
+dist
+qa*
+.env
+.env.*
+*.local
+PRODUCT.md
+DESIGN.md
+AGENTS.md
+profile-README.md
