@@ -24,6 +24,3 @@ npm run typecheck
 npm run build
 ```
 
-## Notes
-
-Internal planning files such as `PRODUCT.md`, `DESIGN.md`, `AGENTS.md`, local QA screenshots, build output, and dependencies are intentionally ignored.
