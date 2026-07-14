@@ -1404,10 +1404,18 @@ h1 {
 
   .site-header {
     position: sticky;
-    grid-template-columns: 1fr auto;
-    gap: 0.85rem;
+    grid-template-areas:
+      "brand actions"
+      "nav nav";
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.7rem 0.9rem;
     align-items: center;
-    padding: 0.8rem 1rem 0.7rem;
+    min-height: auto;
+    padding: 0.75rem 1rem 0.65rem;
+  }
+
+  .brand-mark {
+    grid-area: brand;
   }
 
   .brand-mark span {
@@ -1418,19 +1426,35 @@ h1 {
     font-size: 0.65rem;
   }
 
+  .header-actions {
+    grid-area: actions;
+  }
+
   .theme-switch {
-    width: 2.35rem;
-    height: 2.35rem;
+    width: 2rem;
+    height: 2rem;
+    border-color: var(--border);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .theme-switch svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .theme-switch:hover {
+    box-shadow: none;
   }
 
   nav {
-    grid-column: 1 / -1;
+    grid-area: nav;
     width: 100%;
     justify-content: flex-start;
-    gap: 0.45rem;
+    gap: 1rem;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
-    padding-bottom: 0.1rem;
+    padding: 0.05rem 0 0.15rem;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
@@ -1441,19 +1465,24 @@ h1 {
 
   nav a {
     flex: 0 0 auto;
-    min-height: 34px;
+    min-height: 26px;
     display: inline-flex;
     align-items: center;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 0.42rem 0.7rem;
-    font-size: 0.68rem;
-    background: var(--surface);
+    border: 0;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    padding: 0.15rem 0 0.25rem;
+    background: transparent;
+    font-size: 0.64rem;
+  }
+
+  nav a:hover {
+    border-bottom-color: var(--accent);
   }
 
   .hero-section {
     min-height: auto;
-    padding: 3.8rem 1rem 2.6rem;
+    padding: 2.9rem 1rem 2.6rem;
   }
 
   .hero-grid {
