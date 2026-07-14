@@ -334,10 +334,7 @@ function App() {
             aria-pressed={isLight}
             onClick={() => setTheme(isLight ? "dark" : "light")}
           >
-            <span className="theme-switch__thumb">
-              {isLight ? <Sun size={14} weight="bold" /> : <Moon size={14} weight="bold" />}
-            </span>
-            <span>{isLight ? "Light" : "Dark"}</span>
+            {isLight ? <Sun size={18} weight="bold" /> : <Moon size={18} weight="bold" />}
           </button>
           <div className="availability">
             <span />
