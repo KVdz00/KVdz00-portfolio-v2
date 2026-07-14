@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import {
   ArrowDown,
   EnvelopeSimple,
   GithubLogo,
   InstagramLogo,
+  Moon,
+  Sun,
 } from "@phosphor-icons/react";
 
 type Project = {
@@ -14,6 +17,19 @@ type Project = {
   status: string;
   preview: "utility" | "arindra" | "medan" | "portfolio" | "modtoggle";
 };
+
+type Theme = "dark" | "light";
+
+const themeStorageKey = "kvdz00-portfolio-theme";
+
+function getInitialTheme(): Theme {
+  if (typeof window === "undefined") {
+    return "dark";
+  }
+
+  const savedTheme = window.localStorage.getItem(themeStorageKey);
+  return savedTheme === "light" || savedTheme === "dark" ? savedTheme : "dark";
+}
 
 const projects: Project[] = [
   {
@@ -281,6 +297,18 @@ function ProjectPreview({ type }: { type: Project["preview"] }) {
 }
 
 function App() {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const isLight = theme === "light";
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", isLight ? "#f4f8fb" : "#071014");
+    window.localStorage.setItem(themeStorageKey, theme);
+  }, [isLight, theme]);
+
   return (
     <>
       <a className="skip-link" href="#main">
@@ -298,9 +326,23 @@ function App() {
           <a href="#process">Process</a>
           <a href="#connect">Connect</a>
         </nav>
-        <div className="availability">
-          <span />
-          Available for projects
+        <div className="header-actions">
+          <button
+            className="theme-switch"
+            type="button"
+            aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
+            aria-pressed={isLight}
+            onClick={() => setTheme(isLight ? "dark" : "light")}
+          >
+            <span className="theme-switch__thumb">
+              {isLight ? <Sun size={14} weight="bold" /> : <Moon size={14} weight="bold" />}
+            </span>
+            <span>{isLight ? "Light" : "Dark"}</span>
+          </button>
+          <div className="availability">
+            <span />
+            Available for projects
+          </div>
         </div>
       </header>
 

@@ -9,27 +9,53 @@
     />
     <meta name="author" content="Muhammad Dzikrul Kahfi" />
     <meta name="theme-color" content="#071014" />
+    <link rel="canonical" href="https://kvdz00-portfolio-v2.vercel.app/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="KVdz00 Portfolio" />
     <meta property="og:title" content="Muhammad Dzikrul Kahfi | Portfolio" />
     <meta
       property="og:description"
       content="Practical web apps, desktop utilities, and tools with clean interfaces and maintainable code."
     />
-    <meta property="og:url" content="https://github.com/KVdz00" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:url" content="https://kvdz00-portfolio-v2.vercel.app/" />
+    <meta property="og:image" content="https://kvdz00-portfolio-v2.vercel.app/og-image.png" />
+    <meta property="og:image:secure_url" content="https://kvdz00-portfolio-v2.vercel.app/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Muhammad Dzikrul Kahfi portfolio preview with selected work and contact links."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Muhammad Dzikrul Kahfi | Portfolio" />
     <meta
       name="twitter:description"
       content="Practical web apps, desktop utilities, and tools with clean interfaces and maintainable code."
     />
+    <meta name="twitter:image" content="https://kvdz00-portfolio-v2.vercel.app/og-image.png" />
     <title>Muhammad Dzikrul Kahfi | Portfolio</title>
+    <script>
+      (() => {
+        const key = "kvdz00-portfolio-theme";
+        const theme = localStorage.getItem(key) === "light" ? "light" : "dark";
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        document
+          .querySelector('meta[name="theme-color"]')
+          ?.setAttribute("content", theme === "light" ? "#f4f8fb" : "#071014");
+      })();
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Muhammad Dzikrul Kahfi",
         "alternateName": "KVdz00",
-        "url": "https://github.com/KVdz00",
+        "url": "https://kvdz00-portfolio-v2.vercel.app/",
+        "image": "https://kvdz00-portfolio-v2.vercel.app/og-image.png",
         "sameAs": [
           "https://github.com/KVdz00",
           "https://www.instagram.com/dzikv_/"
