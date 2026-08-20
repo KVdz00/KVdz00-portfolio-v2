@@ -3,7 +3,11 @@ import { ThemeToggle } from "./ThemeToggle";
 export function Header() {
   return (
     <header className="site-header">
-      <a className="brand-mark" href="#top" aria-label="Muhammad Dzikrul Kahfi home">
+      <a
+        className="brand-mark"
+        href="#top"
+        aria-label="Muhammad Dzikrul Kahfi home"
+      >
         <span>KV</span>
         <small>/ DZ00</small>
       </a>

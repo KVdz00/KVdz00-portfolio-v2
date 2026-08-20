@@ -1,8 +1,16 @@
-import { EnvelopeSimple, GithubLogo, InstagramLogo } from "@phosphor-icons/react";
+import {
+  EnvelopeSimple,
+  GithubLogo,
+  InstagramLogo,
+} from "@phosphor-icons/react";
 
 export function Connect() {
   return (
-    <section className="connect-section" id="connect" aria-labelledby="connect-title">
+    <section
+      className="connect-section"
+      id="connect"
+      aria-labelledby="connect-title"
+    >
       <div className="section-label">
         <span>Connect</span>
         <span>Contact</span>
@@ -10,12 +18,20 @@ export function Connect() {
       <div className="connect-content">
         <div>
           <h2 id="connect-title">
-            Have a web app, internal tool, or desktop utility that needs building or cleaning up?
+            Have a web app, internal tool, or desktop utility that needs
+            building or cleaning up?
           </h2>
-          <p>Email me with the problem, the current state, and what you want the finished version to do.</p>
+          <p>
+            Email me with the problem, the current state, and what you want the
+            finished version to do.
+          </p>
         </div>
         <div className="contact-links" aria-label="Social links">
-          <a href="https://www.instagram.com/dzikv_/" target="_blank" rel="noreferrer">
+          <a
+            href="https://www.instagram.com/dzikv_/"
+            target="_blank"
+            rel="noreferrer"
+          >
             <InstagramLogo size={22} weight="bold" />
             <span>@dzikv_</span>
           </a>

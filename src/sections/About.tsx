@@ -14,10 +14,14 @@ export function About() {
       </div>
       <div className="about-content">
         <div>
-          <h2 id="about-title">I work across browser UI, backend workflows, and native desktop boundaries.</h2>
+          <h2 id="about-title">
+            I work across browser UI, backend workflows, and native desktop
+            boundaries.
+          </h2>
           <p>
-            When a project grows past a simple page, I keep the important decisions in the repo:
-            architecture notes, task plans, CI checks, and smoke tests for behavior that is easy to break.
+            When a project grows past a simple page, I keep the important
+            decisions in the repo: architecture notes, task plans, CI checks,
+            and smoke tests for behavior that is easy to break.
           </p>
         </div>
         <ol className="principle-list" aria-label="Project evidence">

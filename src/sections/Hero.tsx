@@ -15,8 +15,9 @@ export function Hero() {
             Dzikrul Kahfi
           </h1>
           <p>
-            I build web apps, Windows utilities, and small tools. The work here comes from private
-            codebases, client-facing sites, school projects, and experiments I still use to test ideas.
+            I build web apps, Windows utilities, and small tools. The work here
+            comes from private codebases, client-facing sites, school projects,
+            and experiments I still use to test ideas.
           </p>
           <div className="hero-actions" aria-label="Primary actions">
             <a className="primary-link" href="#work">
@@ -31,8 +32,9 @@ export function Hero() {
 
         <aside className="hero-note" aria-label="Portfolio summary">
           <p>
-            Recent work includes a Tauri Windows utility, a Next.js and Supabase philosophy app,
-            Laravel sites with admin workflows, and a Fabric client mod.
+            Recent work includes a Tauri Windows utility, a Next.js and Supabase
+            philosophy app, Laravel sites with admin workflows, and a Fabric
+            client mod.
           </p>
           <div>
             <span>Based in Indonesia</span>

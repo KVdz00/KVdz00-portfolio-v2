@@ -35,7 +35,11 @@ export function ThemeToggle() {
       aria-pressed={isLight}
       onClick={() => setTheme(isLight ? "dark" : "light")}
     >
-      {isLight ? <Sun size={18} weight="bold" /> : <Moon size={18} weight="bold" />}
+      {isLight ? (
+        <Sun size={18} weight="bold" />
+      ) : (
+        <Moon size={18} weight="bold" />
+      )}
     </button>
   );
 }

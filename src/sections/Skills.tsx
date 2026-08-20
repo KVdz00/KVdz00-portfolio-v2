@@ -2,7 +2,11 @@ import { skillGroups } from "../data/skills";
 
 export function Skills() {
   return (
-    <section className="skills-section" id="skills" aria-labelledby="skills-title">
+    <section
+      className="skills-section"
+      id="skills"
+      aria-labelledby="skills-title"
+    >
       <div className="section-label">
         <span>Skills</span>
         <span>Toolkit</span>

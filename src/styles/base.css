@@ -16,14 +16,21 @@
   --header-bg: oklch(12% 0.018 235 / 0.86);
   --selection-bg: oklch(78% 0.13 205 / 0.28);
   --row-bg: linear-gradient(90deg, transparent, oklch(19% 0.024 235 / 0.38));
-  --row-hover: linear-gradient(90deg, oklch(18% 0.03 225 / 0.72), oklch(20% 0.03 225 / 0.4));
+  --row-hover: linear-gradient(
+    90deg,
+    oklch(18% 0.03 225 / 0.72),
+    oklch(20% 0.03 225 / 0.4)
+  );
   --contact-bg: oklch(15% 0.02 235);
   --contact-hover: oklch(18% 0.027 230);
   --preview-label-bg: oklch(8% 0.018 235 / 0.72);
   --max: 1440px;
   --page-pad: clamp(1rem, 3vw, 2.2rem);
-  --sans: "Aptos", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --mono: "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --sans:
+    "Aptos", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  --mono:
+    "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 html[data-theme="light"] {
@@ -43,8 +50,16 @@ html[data-theme="light"] {
   --page-glow: oklch(76% 0.08 210 / 0.32);
   --header-bg: oklch(98% 0.01 228 / 0.88);
   --selection-bg: oklch(70% 0.14 210 / 0.24);
-  --row-bg: linear-gradient(90deg, oklch(99% 0.006 228), oklch(94% 0.018 228 / 0.72));
-  --row-hover: linear-gradient(90deg, oklch(98% 0.01 228), oklch(91% 0.025 220 / 0.82));
+  --row-bg: linear-gradient(
+    90deg,
+    oklch(99% 0.006 228),
+    oklch(94% 0.018 228 / 0.72)
+  );
+  --row-hover: linear-gradient(
+    90deg,
+    oklch(98% 0.01 228),
+    oklch(91% 0.025 220 / 0.82)
+  );
   --contact-bg: oklch(99% 0.006 228);
   --contact-hover: oklch(94% 0.018 228);
   --preview-label-bg: oklch(99% 0.006 228 / 0.78);
@@ -58,7 +73,9 @@ html {
   background: var(--bg);
   scroll-padding-top: 6.5rem;
   scroll-behavior: smooth;
-  transition: background-color 420ms ease, color 420ms ease;
+  transition:
+    background-color 420ms ease,
+    color 420ms ease;
 }
 
 body {
@@ -73,7 +90,9 @@ body {
   font-size: 16px;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
-  transition: background 520ms ease, color 420ms ease;
+  transition:
+    background 520ms ease,
+    color 420ms ease;
 }
 
 a {

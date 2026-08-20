@@ -1,4 +1,5 @@
-export type PreviewKind = "utility" | "arindra" | "medan" | "filsafit" | "modtoggle";
+export type PreviewKind =
+  "utility" | "arindra" | "medan" | "filsafit" | "modtoggle";
 
 export type Project = {
   id: string;
