@@ -1,6 +1,6 @@
 # KVdz00 Portfolio V2
 
-Personal portfolio for Muhammad Dzikrul Kahfi, built to present selected private and public work through concise case-study rows and repo-informed visual previews.
+Personal portfolio for Muhammad Dzikrul Kahfi, built around concise project case studies, repo-informed previews, and real project screenshots when a safe, readable asset is available.
 
 ## Stack
 
@@ -20,7 +20,9 @@ npm run dev
 ## Checks
 
 ```bash
+npm run lint
+npm run format:check
 npm run typecheck
 npm run build
+npm run test:e2e
 ```
-
