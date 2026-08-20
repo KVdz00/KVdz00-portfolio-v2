@@ -4,7 +4,7 @@
 
 **Goal:** Improve the existing portfolio without redesigning it by making project evidence more concrete, copy more specific, source files easier to maintain, accessibility stronger, and quality checks reproducible.
 
-**Architecture:** Keep React 19 + Vite and the existing visual system. First add browser characterization tests, then extract data/components, split CSS by responsibility, replace generic copy with repo-backed case-study content, and audit project repositories for safe real screenshots before deciding whether each preview stays generated or becomes image-based.
+**Architecture:** Keep React 19 + Vite and the existing visual system. Add characterization tests first, then extract data/components, split CSS by responsibility, replace generic copy with repo-backed case-study content, and audit project repositories for safe real screenshots before deciding whether each preview stays generated or becomes image-based.
 
 **Tech Stack:** React 19, TypeScript 5.8, Vite 7, plain CSS, Phosphor Icons, ESLint, Prettier, Playwright.
 
@@ -13,61 +13,56 @@
 ## Global Constraints
 
 - Keep the current visual language, responsive layout, dark/light theme, project-row composition, typography direction, and overall site structure.
-- No framework migration.
-- No CMS, database, authentication, or backend.
-- No full visual redesign.
-- No animation library.
+- No framework migration, CMS, database, authentication, backend, animation library, or full visual redesign.
 - No invented metrics, impact claims, client results, or project facts.
 - No forced public links for private repositories.
-- Use real screenshots only when a safe existing asset is available and legible at portfolio scale.
+- Use a real screenshot only when an existing asset is safe, genuinely shows the project UI, and remains legible at portfolio scale.
 - Keep repo-informed generated previews when no suitable screenshot exists.
 - Do not use em dashes in user-facing portfolio copy.
-- Avoid generic manifesto language and generic AI-style portfolio slogans.
-
----
+- Avoid manifesto language, motivational slogans, and generic AI-style portfolio copy.
 
 ## File Map
 
-### New files
+**Create**
 
-- `eslint.config.js` - flat ESLint config for TypeScript and React.
-- `.prettierignore` - generated/vendor paths excluded from formatting checks.
-- `playwright.config.ts` - browser smoke-test configuration.
-- `tests/portfolio.spec.ts` - desktop, mobile, theme, navigation, contact, and reduced-motion smoke tests.
-- `src/types/portfolio.ts` - portfolio domain types.
-- `src/data/projects.ts` - selected project case-study data.
-- `src/data/skills.ts` - primary and secondary skill groups.
-- `src/data/process.ts` - concrete process steps.
-- `src/components/ThemeToggle.tsx` - theme state control.
-- `src/components/Header.tsx` - site header/navigation.
-- `src/components/ProjectRow.tsx` - one selected-work row.
-- `src/components/ProjectPreview.tsx` - generated preview router, with real-image rendering only if the asset audit justifies it.
-- `src/sections/Hero.tsx` - hero section.
-- `src/sections/About.tsx` - factual about section.
-- `src/sections/Work.tsx` - selected work section.
-- `src/sections/Skills.tsx` - skills section.
-- `src/sections/Process.tsx` - concrete process section.
-- `src/sections/Connect.tsx` - contact section.
-- `src/styles/base.css` - theme tokens, reset, base typography, focus, reduced motion.
-- `src/styles/layout.css` - header, sections, project-row layout, responsive rules.
-- `src/styles/projects.css` - generated project-preview visuals.
+- `eslint.config.js`
+- `.prettierignore`
+- `playwright.config.ts`
+- `tests/portfolio.spec.ts`
+- `src/types/portfolio.ts`
+- `src/data/projects.ts`
+- `src/data/skills.ts`
+- `src/data/process.ts`
+- `src/components/ThemeToggle.tsx`
+- `src/components/Header.tsx`
+- `src/components/ProjectRow.tsx`
+- `src/components/ProjectPreview.tsx`
+- `src/sections/Hero.tsx`
+- `src/sections/About.tsx`
+- `src/sections/Work.tsx`
+- `src/sections/Skills.tsx`
+- `src/sections/Process.tsx`
+- `src/sections/Connect.tsx`
+- `src/styles/base.css`
+- `src/styles/layout.css`
+- `src/styles/projects.css`
 
-### Modified files
+**Modify**
 
-- `package.json` - scripts and dev dependencies.
-- `package-lock.json` - dependency lock update from `npm install`.
-- `src/App.tsx` - reduced to top-level composition.
-- `src/main.tsx` - import split CSS files.
-- `index.html` - metadata copy aligned with the rewritten portfolio.
-- `README.md` - document checks and project structure.
+- `package.json`
+- `package-lock.json`
+- `src/App.tsx`
+- `src/main.tsx`
+- `index.html`
+- `README.md`
 
-### Removed file
+**Delete after successful verification**
 
-- `src/styles.css` - removed only after all rules are moved into the three focused stylesheet files and visual checks pass.
+- `src/styles.css`
 
 ---
 
-### Task 1: Add quality tooling and browser characterization tests
+### Task 1: Add quality tooling and characterization tests
 
 **Files:**
 - Modify: `package.json`
@@ -78,21 +73,17 @@
 - Create: `tests/portfolio.spec.ts`
 
 **Interfaces:**
-- Produces scripts: `npm run lint`, `npm run format:check`, `npm run typecheck`, `npm run build`, `npm run test:e2e`.
-- Produces a browser regression suite used by every later task.
+- Produces scripts `lint`, `format:check`, `typecheck`, `build`, and `test:e2e`.
+- Produces a browser regression suite used by later refactors.
 
-- [ ] **Step 1: Install focused dev tooling**
-
-Run:
+- [ ] **Step 1: Install tooling**
 
 ```bash
 npm install -D eslint @eslint/js typescript-eslint eslint-plugin-react-hooks eslint-plugin-react-refresh globals prettier @playwright/test
 npx playwright install chromium
 ```
 
-- [ ] **Step 2: Add scripts to `package.json`**
-
-Use this scripts block:
+- [ ] **Step 2: Replace the scripts block in `package.json`**
 
 ```json
 {
@@ -165,32 +156,25 @@ export default defineConfig({
     reuseExistingServer: true,
   },
   projects: [
-    {
-      name: "desktop-chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
-    {
-      name: "mobile-chromium",
-      use: { ...devices["Pixel 7"] },
-    },
+    { name: "desktop-chromium", use: { ...devices["Desktop Chrome"] } },
+    { name: "mobile-chromium", use: { ...devices["Pixel 7"] } },
   ],
 });
 ```
 
-- [ ] **Step 6: Write characterization tests in `tests/portfolio.spec.ts`**
+- [ ] **Step 6: Create `tests/portfolio.spec.ts` with the current behavior contract**
 
 ```ts
 import { expect, test } from "@playwright/test";
 
-test("renders core portfolio sections", async ({ page }) => {
+test("renders core portfolio content", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1, name: /Muhammad Dzikrul Kahfi/i })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Selected Work" })).toBeAttached();
   await expect(page.getByText("Liquid Utility", { exact: true })).toBeVisible();
   await expect(page.getByText("ModToggle", { exact: true })).toBeVisible();
 });
 
-test("primary navigation reaches sections", async ({ page }) => {
+test("primary navigation changes the hash", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "Work" }).click();
   await expect(page).toHaveURL(/#work$/);
@@ -200,40 +184,32 @@ test("primary navigation reaches sections", async ({ page }) => {
 
 test("theme toggle persists the selected theme", async ({ page }) => {
   await page.goto("/");
-  const toggle = page.getByRole("button", { name: /switch to light mode/i });
-  await toggle.click();
+  await page.getByRole("button", { name: /switch to light mode/i }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });
 
-test("contact destinations are present", async ({ page }) => {
+test("contact destinations are correct", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("link", { name: /github.com\/KVdz00/i })).toHaveAttribute(
-    "href",
-    "https://github.com/KVdz00",
-  );
-  await expect(page.getByRole("link", { name: /kahfiworks.id@gmail.com/i })).toHaveAttribute(
-    "href",
-    "mailto:kahfiworks.id@gmail.com",
-  );
+  await expect(page.getByRole("link", { name: /github.com\/KVdz00/i })).toHaveAttribute("href", "https://github.com/KVdz00");
+  await expect(page.getByRole("link", { name: /kahfiworks.id@gmail.com/i })).toHaveAttribute("href", "mailto:kahfiworks.id@gmail.com");
 });
 
 test("document does not overflow horizontally", async ({ page }) => {
   await page.goto("/");
-  const dimensions = await page.evaluate(() => ({
-    clientWidth: document.documentElement.clientWidth,
-    scrollWidth: document.documentElement.scrollWidth,
+  const width = await page.evaluate(() => ({
+    client: document.documentElement.clientWidth,
+    scroll: document.documentElement.scrollWidth,
   }));
-  expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1);
+  expect(width.scroll).toBeLessThanOrEqual(width.client + 1);
 });
 ```
 
-- [ ] **Step 7: Run the baseline suite**
-
-Run:
+- [ ] **Step 7: Format once, then run the baseline gate**
 
 ```bash
+npx prettier --write .
 npm run lint
 npm run format:check
 npm run typecheck
@@ -241,18 +217,18 @@ npm run build
 npm run test:e2e
 ```
 
-Expected: existing code may need formatting/lint cleanup before all five pass, but no visual or content change is allowed in this task.
+Expected: all commands exit 0. If ESLint reports a rule violation, change only the code needed to satisfy the reported rule, then rerun the five gate commands. Do not change visible copy or layout in this task.
 
 - [ ] **Step 8: Commit**
 
 ```bash
-git add package.json package-lock.json eslint.config.js .prettierignore playwright.config.ts tests/portfolio.spec.ts
+git add package.json package-lock.json eslint.config.js .prettierignore playwright.config.ts tests/portfolio.spec.ts src index.html vite.config.ts tsconfig*.json
 git commit -m "test: add portfolio quality gates"
 ```
 
 ---
 
-### Task 2: Extract portfolio data and types without changing visible content
+### Task 2: Extract data and types with no visible change
 
 **Files:**
 - Create: `src/types/portfolio.ts`
@@ -262,10 +238,10 @@ git commit -m "test: add portfolio quality gates"
 - Modify: `src/App.tsx`
 
 **Interfaces:**
-- Produces `Project`, `PreviewKind`, `ProcessStep`, and `SkillGroup` types.
-- Produces `projects`, `skillGroups`, and `processSteps` arrays for later section components.
+- Produces `Project`, `PreviewKind`, `ProcessStep`, `SkillGroup`.
+- Produces `projects`, `processSteps`, `skillGroups`.
 
-- [ ] **Step 1: Run characterization tests before refactor**
+- [ ] **Step 1: Run the characterization suite before refactoring**
 
 ```bash
 npm run test:e2e
@@ -300,23 +276,88 @@ export type SkillGroup = {
 };
 ```
 
-- [ ] **Step 3: Move the existing arrays unchanged**
-
-Move `projects` to `src/data/projects.ts`, `skillGroups` to `src/data/skills.ts`, and `processSteps` to `src/data/process.ts`. Preserve every visible string in this task.
-
-Example export shape:
+- [ ] **Step 3: Create `src/data/projects.ts` with the current five objects unchanged**
 
 ```ts
 import type { Project } from "../types/portfolio";
 
 export const projects: Project[] = [
-  // Copy the current five project objects exactly.
+  {
+    id: "01",
+    name: "Liquid Utility",
+    summary: "Tauri utility shell with AppShell navigation, Game Launcher, Hardware Monitor, Media Studio, Settings, and theme or density preferences.",
+    stack: ["Tauri", "React", "TypeScript", "Rust"],
+    outcome: "Desktop control shell",
+    status: "Private Tauri app",
+    preview: "utility",
+  },
+  {
+    id: "02",
+    name: "Arindra Production Web",
+    summary: "Laravel Blade production-house website with a dark hero, showreel selector, service sections, client logos, process, and CTA flow.",
+    stack: ["Laravel", "Blade", "Tailwind CSS", "Alpine.js"],
+    outcome: "Production-house site",
+    status: "Client-facing build",
+    preview: "arindra",
+  },
+  {
+    id: "03",
+    name: "Website Kota Medan",
+    summary: "PHP public site for Medan with a cinematic hero, landmark cards, culture, tourism, local products, reviews, users, and admin workflows.",
+    stack: ["PHP", "MySQL", "JavaScript", "CSS"],
+    outcome: "City content platform",
+    status: "School project",
+    preview: "medan",
+  },
+  {
+    id: "04",
+    name: "Portfolio",
+    summary: "Personal portfolio experiment with cyber typography, scanline and particle layers, theme and language switches, BGM control, and searchable project filtering.",
+    stack: ["HTML", "CSS", "JavaScript", "Canvas"],
+    outcome: "Interactive profile site",
+    status: "Previous portfolio",
+    preview: "portfolio",
+  },
+  {
+    id: "05",
+    name: "ModToggle",
+    summary: "Minecraft Fabric client mod with an O keybind, searchable in-game screen, /modtoggle commands, JSON persistence, and soft suppression strategies.",
+    stack: ["Java", "Fabric API", "Gradle"],
+    outcome: "Client mod controller",
+    status: "Minecraft utility",
+    preview: "modtoggle",
+  },
 ];
 ```
 
-Do the same with `SkillGroup` and `ProcessStep`.
+- [ ] **Step 4: Create `src/data/process.ts` with the current values unchanged**
 
-- [ ] **Step 4: Import the extracted data into `App.tsx`**
+```ts
+import type { ProcessStep } from "../types/portfolio";
+
+export const processSteps: ProcessStep[] = [
+  { id: "01", title: "Map the real task", body: "Start from the user's workflow, the content that must exist, and the constraints that can break the experience." },
+  { id: "02", title: "Shape the interface", body: "Turn the task into layout, hierarchy, states, and responsive behavior before chasing visual effects." },
+  { id: "03", title: "Build the working version", body: "Implement with maintainable components, readable structure, accessible controls, and practical data boundaries." },
+  { id: "04", title: "Verify and refine", body: "Run checks, inspect real browser screenshots, fix awkward spacing, and keep the final result deployable." },
+];
+```
+
+- [ ] **Step 5: Create `src/data/skills.ts` with the current values unchanged**
+
+```ts
+import type { SkillGroup } from "../types/portfolio";
+
+export const skillGroups: SkillGroup[] = [
+  { title: "Languages", items: ["TypeScript", "JavaScript", "PHP", "Java", "HTML", "CSS", "SQL"] },
+  { title: "Frontend", items: ["React", "Tailwind CSS", "Alpine.js", "Vite", "Blade"] },
+  { title: "Backend", items: ["Laravel", "PHP", "MySQL", "SQLite"] },
+  { title: "Desktop & Tools", items: ["Tauri", "Rust", "Fabric API", "Gradle"] },
+  { title: "Creative", items: ["Figma", "Blender 3D", "Game Dev", "UI/UX"] },
+];
+```
+
+- [ ] **Step 6: Remove the three inline arrays from `App.tsx` and import the modules**
 
 ```ts
 import { processSteps } from "./data/process";
@@ -325,21 +366,14 @@ import { skillGroups } from "./data/skills";
 import type { Project } from "./types/portfolio";
 ```
 
-Keep `ProjectPreview` behavior unchanged for now.
+Change the existing preview signature to `function ProjectPreview({ type }: { type: Project["preview"] })` using the imported `Project` type. Make no markup or string changes.
 
-- [ ] **Step 5: Verify behavior did not change**
+- [ ] **Step 7: Verify and commit**
 
 ```bash
 npm run typecheck
 npm run build
 npm run test:e2e
-```
-
-Expected: PASS.
-
-- [ ] **Step 6: Commit**
-
-```bash
 git add src/types src/data src/App.tsx
 git commit -m "refactor: extract portfolio data"
 ```
@@ -362,61 +396,67 @@ git commit -m "refactor: extract portfolio data"
 - Modify: `src/App.tsx`
 
 **Interfaces:**
-- `ThemeToggle` owns local-storage theme state and updates `document.documentElement` plus `theme-color`.
-- `Header` renders brand, nav, theme control, and availability text.
-- `ProjectRow` consumes `Project`.
-- `ProjectPreview` consumes `PreviewKind`.
-- Each section owns one semantic `<section>` only.
+- `ThemeToggle()` owns theme state and persistence.
+- `Header()` renders brand, nav, theme control, availability.
+- `ProjectPreview({ type }: { type: PreviewKind })` renders the exact current generated preview markup.
+- `ProjectRow({ project }: { project: Project })` renders one project row.
+- Sections expose zero-prop components.
 
-- [ ] **Step 1: Extract `ThemeToggle` first**
+- [ ] **Step 1: Extract the current theme logic into `ThemeToggle.tsx`**
 
-Move `Theme`, `themeStorageKey`, `getInitialTheme`, the state, and the effect from `App.tsx` into `src/components/ThemeToggle.tsx`.
+Move the existing `Theme` type, `themeStorageKey`, `getInitialTheme()`, `useState`, and `useEffect` logic from `App.tsx` into a zero-prop exported component. The returned button markup must be the exact current `.theme-switch` button, including its dynamic accessible label and `aria-pressed` value.
 
-The component API is intentionally zero-prop:
+- [ ] **Step 2: Extract `Header.tsx`**
 
-```ts
-export function ThemeToggle() {
-  // existing theme behavior unchanged
-}
-```
+Move the exact current `<header className="site-header">...</header>` block into `Header()`. Import `ThemeToggle` and replace only the inline theme button with `<ThemeToggle />`. Preserve nav anchors `#work`, `#about`, `#skills`, `#process`, `#connect` and the current availability text.
 
-- [ ] **Step 2: Extract `Header`**
+- [ ] **Step 3: Extract `ProjectPreview.tsx`**
 
-`Header.tsx` imports `ThemeToggle` and preserves the existing nav anchors exactly: `#work`, `#about`, `#skills`, `#process`, `#connect`.
+Cut the complete current `ProjectPreview` function from `App.tsx`, paste it into the new file, add `export`, and import `PreviewKind`. Do not alter any generated preview markup, class name, or preview text in this task.
 
-- [ ] **Step 3: Extract `ProjectPreview`**
+- [ ] **Step 4: Extract `ProjectRow.tsx`**
 
-Move all existing generated preview markup out of `App.tsx` without changing class names or strings.
+Move the exact `<article className="project-row" key={project.name}>...</article>` markup currently inside the `projects.map` callback into:
 
-Signature:
-
-```ts
-import type { PreviewKind } from "../types/portfolio";
-
-export function ProjectPreview({ type }: { type: PreviewKind }) {
-  // existing generated preview switch/branches
-}
-```
-
-- [ ] **Step 4: Extract `ProjectRow`**
-
-Signature:
-
-```ts
+```tsx
 import type { Project } from "../types/portfolio";
+import { ProjectPreview } from "./ProjectPreview";
 
 export function ProjectRow({ project }: { project: Project }) {
-  // existing article markup
+  return (
+    <article className="project-row">
+      {/* Paste the current article children here without changing their markup or strings. */}
+    </article>
+  );
 }
 ```
 
-- [ ] **Step 5: Extract six section components**
+The only structural change is that `key={project.name}` moves to the `ProjectRow` usage in `Work.tsx`, because React keys belong at the map call site.
 
-Each component owns the existing markup for its section. `Work` imports `projects` and maps to `ProjectRow`; `Skills` imports `skillGroups`; `Process` imports `processSteps`.
+- [ ] **Step 5: Extract the six sections**
 
-- [ ] **Step 6: Reduce `App.tsx` to composition**
+Move each current section block by its existing `id` into the matching zero-prop component:
 
-Target shape:
+```text
+#top     -> Hero.tsx
+#about   -> About.tsx
+#work    -> Work.tsx
+#skills  -> Skills.tsx
+#process -> Process.tsx
+#connect -> Connect.tsx
+```
+
+`Work.tsx` imports `projects` and renders:
+
+```tsx
+{projects.map((project) => (
+  <ProjectRow project={project} key={project.name} />
+))}
+```
+
+`Skills.tsx` imports `skillGroups`. `Process.tsx` imports `processSteps`. Preserve all current visible strings in this task.
+
+- [ ] **Step 6: Replace `App.tsx` with composition-only markup**
 
 ```tsx
 import { Header } from "./components/Header";
@@ -451,76 +491,61 @@ function App() {
 export default App;
 ```
 
-- [ ] **Step 7: Verify the refactor**
+- [ ] **Step 7: Verify and commit**
 
 ```bash
 npm run lint
 npm run typecheck
 npm run build
 npm run test:e2e
-```
-
-Expected: PASS, with no intended visual or copy changes.
-
-- [ ] **Step 8: Commit**
-
-```bash
 git add src/components src/sections src/App.tsx
 git commit -m "refactor: split portfolio components"
 ```
 
 ---
 
-### Task 4: Split CSS and add reduced-motion support
+### Task 4: Split CSS and respect reduced motion
 
 **Files:**
 - Create: `src/styles/base.css`
 - Create: `src/styles/layout.css`
 - Create: `src/styles/projects.css`
 - Modify: `src/main.tsx`
-- Delete after verification: `src/styles.css`
 - Modify: `tests/portfolio.spec.ts`
+- Delete: `src/styles.css`
 
 **Interfaces:**
-- Import order must be `base.css`, then `layout.css`, then `projects.css`.
-- Generated preview class names must remain unchanged during the split.
+- Import order is `base.css`, `layout.css`, `projects.css`.
+- Existing class names stay unchanged.
 
-- [ ] **Step 1: Add a reduced-motion browser test that fails on current CSS**
-
-Append to `tests/portfolio.spec.ts`:
+- [ ] **Step 1: Add a failing reduced-motion test**
 
 ```ts
-test("reduced motion disables smooth scrolling and long transitions", async ({ page }) => {
+test("reduced motion disables smooth scrolling and long body transitions", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-
-  const values = await page.evaluate(() => {
-    const html = getComputedStyle(document.documentElement);
-    const body = getComputedStyle(document.body);
-    return {
-      scrollBehavior: html.scrollBehavior,
-      bodyTransitionDuration: body.transitionDuration,
-    };
-  });
-
+  const values = await page.evaluate(() => ({
+    scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
+    bodyTransitionDuration: getComputedStyle(document.body).transitionDuration,
+  }));
   expect(values.scrollBehavior).toBe("auto");
   expect(values.bodyTransitionDuration).not.toContain("0.42s");
 });
 ```
 
-- [ ] **Step 2: Run the new test and verify failure**
+- [ ] **Step 2: Verify that test fails before the CSS fix**
 
 ```bash
 npm run test:e2e -- --grep "reduced motion"
 ```
 
-Expected: FAIL because the current stylesheet forces smooth scrolling and global transitions.
+Expected: FAIL because the current stylesheet sets smooth scrolling and broad transitions.
 
-- [ ] **Step 3: Move base rules to `src/styles/base.css`**
+- [ ] **Step 3: Create `base.css`**
 
-Move theme variables, resets, `html`, `body`, anchors, focus-visible, selection, skip link, and `.sr-only` into `base.css`.
+Move `:root`, `html[data-theme="light"]`, box sizing, `html`, `body`, anchor defaults, focus-visible, selection, skip link, global heading/paragraph margin reset, and `.sr-only` into `base.css`.
 
-Remove this rule completely:
+Delete the current global rule:
 
 ```css
 :where(body, body *) {
@@ -530,7 +555,7 @@ Remove this rule completely:
 }
 ```
 
-Add:
+Add at the end of `base.css`:
 
 ```css
 @media (prefers-reduced-motion: reduce) {
@@ -548,35 +573,32 @@ Add:
 }
 ```
 
-Keep explicit transitions only on interactive components that already define them, such as `.theme-switch`, nav links, project rows, and contact links.
+- [ ] **Step 4: Create `layout.css`**
 
-- [ ] **Step 4: Move layout rules to `src/styles/layout.css`**
+Move all non-preview component/layout rules from `.site-header` through footer plus the responsive rules that control header, section grids, project-row layout, skills, process, connect, and footer.
 
-Move header, hero, about, work-row layout, skills, process, connect, footer, and responsive layout rules. Do not move generated preview internals here.
+- [ ] **Step 5: Create `projects.css`**
 
-- [ ] **Step 5: Move generated preview rules to `src/styles/projects.css`**
+Move `.project-preview`, `.utility`, every `.liquid-*`, `.arindra*`, `.medan*`, `.portfolio`, `.cyber-*`, `.modtoggle*`, and preview-specific responsive rules. Preserve their current order relative to one another.
 
-Move `.project-preview` plus all `.utility`, `.liquid-*`, `.arindra-*`, `.medan-*`, `.portfolio`, `.cyber-*`, `.modtoggle*` rules and their preview-specific responsive overrides.
-
-- [ ] **Step 6: Update `src/main.tsx` imports**
+- [ ] **Step 6: Update `main.tsx`**
 
 ```ts
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
 import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/projects.css";
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
 ```
 
-- [ ] **Step 7: Run checks before deleting the old stylesheet**
-
-```bash
-npm run typecheck
-npm run build
-npm run test:e2e
-```
-
-Expected: PASS.
-
-- [ ] **Step 8: Delete `src/styles.css` and rerun checks**
+- [ ] **Step 7: Remove `src/styles.css`, then run the complete gate**
 
 ```bash
 rm src/styles.css
@@ -587,9 +609,9 @@ npm run build
 npm run test:e2e
 ```
 
-Expected: PASS.
+Expected: all commands exit 0, including the new reduced-motion test.
 
-- [ ] **Step 9: Commit**
+- [ ] **Step 8: Commit**
 
 ```bash
 git add src/styles src/main.tsx tests/portfolio.spec.ts src/styles.css
@@ -598,27 +620,26 @@ git commit -m "refactor: split styles and respect reduced motion"
 
 ---
 
-### Task 5: Replace generic copy with concrete project evidence
+### Task 5: Replace generic copy with concrete case studies
 
 **Files:**
 - Modify: `src/types/portfolio.ts`
 - Modify: `src/data/projects.ts`
 - Modify: `src/data/skills.ts`
 - Modify: `src/data/process.ts`
+- Modify: `src/components/ProjectRow.tsx`
 - Modify: `src/sections/Hero.tsx`
 - Modify: `src/sections/About.tsx`
 - Modify: `src/sections/Process.tsx`
 - Modify: `src/sections/Connect.tsx`
-- Modify: `src/components/ProjectRow.tsx`
+- Modify: `src/styles/layout.css`
 - Modify: `tests/portfolio.spec.ts`
 
 **Interfaces:**
-- `Project` changes from `outcome` to the case-study fields `problem`, `technicalDecision`, and `result`.
-- Replace the self-referential previous `Portfolio` project with `Filsafit`.
+- `Project` gains `problem`, `technicalDecision`, `result`; removes `outcome`.
+- Selected work replaces the previous self-referential `Portfolio` item with `Filsafit`.
 
-- [ ] **Step 1: Add failing content assertions**
-
-Append to `tests/portfolio.spec.ts`:
+- [ ] **Step 1: Add a failing case-study test**
 
 ```ts
 test("shows concrete case-study evidence", async ({ page }) => {
@@ -632,15 +653,15 @@ test("shows concrete case-study evidence", async ({ page }) => {
 });
 ```
 
-- [ ] **Step 2: Run the test and verify failure**
+- [ ] **Step 2: Verify failure**
 
 ```bash
 npm run test:e2e -- --grep "concrete case-study evidence"
 ```
 
-Expected: FAIL because `Filsafit` and the new case-study labels do not exist yet.
+Expected: FAIL because Filsafit and the new fields are not rendered yet.
 
-- [ ] **Step 3: Update the `Project` type**
+- [ ] **Step 3: Replace the project type**
 
 ```ts
 export type PreviewKind = "utility" | "arindra" | "medan" | "filsafit" | "modtoggle";
@@ -658,9 +679,9 @@ export type Project = {
 };
 ```
 
-- [ ] **Step 4: Replace project data with these verified case-study strings**
+Keep `ProcessStep` and `SkillGroup` unchanged.
 
-Use these five projects in this order:
+- [ ] **Step 4: Replace `projects` with this exact data**
 
 ```ts
 export const projects: Project[] = [
@@ -722,42 +743,30 @@ export const projects: Project[] = [
 ];
 ```
 
-- [ ] **Step 5: Update `ProjectRow` to render compact case-study facts**
+- [ ] **Step 5: Render four compact project facts**
 
-Replace the two-item `Outcome/Status` block with:
+Replace the current `Outcome/Status` definition list in `ProjectRow.tsx` with:
 
 ```tsx
 <dl className="project-facts">
-  <div>
-    <dt>Problem</dt>
-    <dd>{project.problem}</dd>
-  </div>
-  <div>
-    <dt>Technical decision</dt>
-    <dd>{project.technicalDecision}</dd>
-  </div>
-  <div>
-    <dt>Result</dt>
-    <dd>{project.result}</dd>
-  </div>
-  <div>
-    <dt>Status</dt>
-    <dd>{project.status}</dd>
-  </div>
+  <div><dt>Problem</dt><dd>{project.problem}</dd></div>
+  <div><dt>Technical decision</dt><dd>{project.technicalDecision}</dd></div>
+  <div><dt>Result</dt><dd>{project.result}</dd></div>
+  <div><dt>Status</dt><dd>{project.status}</dd></div>
 </dl>
 ```
 
-Adjust `.project-facts` spacing only as much as needed to keep rows readable and not excessively tall.
+Keep the project row layout recognizable. If the text becomes too dense, reduce heading size slightly or increase vertical padding; do not convert the project section into a new card design.
 
 - [ ] **Step 6: Replace hero copy**
 
-Use:
+Main paragraph:
 
 ```text
 I build web apps, Windows utilities, and small tools. The work here comes from private codebases, client-facing sites, school projects, and experiments I still use to test ideas.
 ```
 
-Replace the hero note with:
+Hero note:
 
 ```text
 Recent work includes a Tauri Windows utility, a Next.js and Supabase philosophy app, Laravel sites with admin workflows, and a Fabric client mod.
@@ -765,21 +774,23 @@ Recent work includes a Tauri Windows utility, a Next.js and Supabase philosophy 
 
 Keep `Based in Indonesia` and `UTC +7`.
 
-- [ ] **Step 7: Replace the About manifesto with factual copy**
+- [ ] **Step 7: Replace the About manifesto**
 
-Use heading:
+Section label second line: `In practice`
+
+Heading:
 
 ```text
 I work across browser UI, backend workflows, and native desktop boundaries.
 ```
 
-Use paragraph:
+Paragraph:
 
 ```text
 When a project grows past a simple page, I keep the important decisions in the repo: architecture notes, task plans, CI checks, and smoke tests for behavior that is easy to break.
 ```
 
-Replace the current principle list with this evidence list:
+Evidence list:
 
 ```text
 01  React UI and Rust native commands in Liquid Utility
@@ -788,102 +799,61 @@ Replace the current principle list with this evidence list:
 04  Responsive browser checks in this portfolio
 ```
 
-Change the section label from `Manifesto` to `In practice`.
-
-- [ ] **Step 8: Replace process data with concrete steps**
+- [ ] **Step 8: Replace process data**
 
 ```ts
 export const processSteps: ProcessStep[] = [
-  {
-    id: "01",
-    title: "Define the actual flow",
-    body: "Write down the screens, data, native actions, or failure cases that need to work.",
-  },
-  {
-    id: "02",
-    title: "Separate the risky boundaries",
-    body: "Keep browser UI, server and data work, and native system access explicit when the stack crosses those lines.",
-  },
-  {
-    id: "03",
-    title: "Build the end-to-end path",
-    body: "Get the real workflow working before adding extra polish or secondary states.",
-  },
-  {
-    id: "04",
-    title: "Run the checks and inspect it",
-    body: "Typecheck, build, smoke-test the paths that matter, then inspect desktop and mobile layouts.",
-  },
+  { id: "01", title: "Define the actual flow", body: "Write down the screens, data, native actions, or failure cases that need to work." },
+  { id: "02", title: "Separate the risky boundaries", body: "Keep browser UI, server and data work, and native system access explicit when the stack crosses those lines." },
+  { id: "03", title: "Build the end-to-end path", body: "Get the real workflow working before adding extra polish or secondary states." },
+  { id: "04", title: "Run the checks and inspect it", body: "Typecheck, build, smoke-test the paths that matter, then inspect desktop and mobile layouts." },
 ];
 ```
 
-Use process heading:
+Process heading:
 
 ```text
 The workflow changes with the project, but these four steps show up often.
 ```
 
-Use intro paragraph:
+Process paragraph:
 
 ```text
 The point is to get the real path working, keep risky boundaries visible, and verify what can break before calling it done.
 ```
 
-- [ ] **Step 9: Rebalance skills**
-
-Use only two groups:
+- [ ] **Step 9: Rebalance skills to two groups**
 
 ```ts
 export const skillGroups: SkillGroup[] = [
   {
     title: "Primary",
-    items: [
-      "TypeScript",
-      "React",
-      "Next.js",
-      "Tauri",
-      "Rust",
-      "Laravel",
-      "PHP",
-      "Supabase",
-      "SQL",
-      "GitHub Actions",
-    ],
+    items: ["TypeScript", "React", "Next.js", "Tauri", "Rust", "Laravel", "PHP", "Supabase", "SQL", "GitHub Actions"],
   },
   {
     title: "Also used",
-    items: [
-      "JavaScript",
-      "Tailwind CSS",
-      "Alpine.js",
-      "Vite",
-      "Java",
-      "Fabric API",
-      "Gradle",
-      "Figma",
-      "Blender",
-    ],
+    items: ["JavaScript", "Tailwind CSS", "Alpine.js", "Vite", "Java", "Fabric API", "Gradle", "Figma", "Blender"],
   },
 ];
 ```
 
-Update `.skills-grid` to two balanced columns on desktop and one on mobile.
+Change `.skills-grid` desktop columns from five to two. Keep one column at the existing mobile breakpoint.
 
 - [ ] **Step 10: Replace Connect copy**
 
-Use heading:
+Heading:
 
 ```text
 Have a web app, internal tool, or desktop utility that needs building or cleaning up?
 ```
 
-Use paragraph:
+Paragraph:
 
 ```text
 Email me with the problem, the current state, and what you want the finished version to do.
 ```
 
-- [ ] **Step 11: Run checks**
+- [ ] **Step 11: Run the complete gate and commit**
 
 ```bash
 npm run lint
@@ -891,34 +861,27 @@ npm run format:check
 npm run typecheck
 npm run build
 npm run test:e2e
-```
-
-Expected: PASS.
-
-- [ ] **Step 12: Commit**
-
-```bash
 git add src tests/portfolio.spec.ts
 git commit -m "feat: strengthen portfolio case studies"
 ```
 
 ---
 
-### Task 6: Replace the old portfolio preview with Filsafit and audit real screenshots
+### Task 6: Add Filsafit preview and audit real screenshots
 
 **Files:**
 - Modify: `src/components/ProjectPreview.tsx`
 - Modify: `src/styles/projects.css`
-- Conditionally create only when a verified safe screenshot exists: `public/projects/<project-slug>.<ext>`
-- Conditionally modify: `src/types/portfolio.ts`, `src/data/projects.ts`
+- Conditionally create: `public/projects/<project-slug>.<ext>` only when a verified screenshot qualifies.
+- Conditionally modify: `src/types/portfolio.ts`, `src/data/projects.ts` only when a real screenshot qualifies.
 
 **Interfaces:**
-- `filsafit` must have a generated preview even if no real image asset is suitable.
-- Do not add unused screenshot abstraction if the audit finds no real image worth shipping.
+- `filsafit` always has a generated preview.
+- Do not add unused image-preview code if the asset audit finds no suitable real screenshot.
 
-- [ ] **Step 1: Audit visual assets before coding image support**
+- [ ] **Step 1: Audit project repositories**
 
-Inspect these repositories for existing `.png`, `.jpg`, `.jpeg`, or `.webp` screenshots or README-linked screenshots:
+Inspect existing `.png`, `.jpg`, `.jpeg`, `.webp`, and README-linked screenshots in:
 
 ```text
 KVdz00/liquid-utility
@@ -928,18 +891,18 @@ KVdz00/medan
 KVdz00/Toggle-Mod
 ```
 
-Accept an asset only if all are true:
+A screenshot qualifies only when all four checks pass:
 
+```text
 1. It shows the real project UI.
-2. It contains no secrets, tokens, private user data, or private customer data.
-3. It remains understandable when cropped into the existing project-preview area.
-4. It is not a logo, stock image, or decorative asset being misrepresented as a screenshot.
+2. It contains no secret, token, private user data, or private customer data.
+3. It remains understandable when cropped into the existing preview area.
+4. It is not a logo, stock image, illustration, or decorative asset being represented as a screenshot.
+```
 
-If no asset meets all four conditions, keep generated previews for all projects and do not add dead screenshot-rendering code.
+If none qualifies, keep all current previews generated and skip Step 4.
 
-- [ ] **Step 2: Replace the old cyber portfolio preview branch with a Filsafit preview**
-
-Use generated markup that communicates the actual product surfaces without pretending to be a screenshot:
+- [ ] **Step 2: Replace the old `portfolio` generated branch with `filsafit`**
 
 ```tsx
 {type === "filsafit" && (
@@ -955,10 +918,7 @@ Use generated markup that communicates the actual product surfaces without prete
       <div className="filsafit-copy">
         <small>Philosophy encyclopedia</small>
         <strong>Explore schools, compare ideas, then take the quiz.</strong>
-        <div>
-          <span>16 schools</span>
-          <span>30 questions</span>
-        </div>
+        <div><span>16 schools</span><span>30 questions</span></div>
       </div>
       <div className="filsafit-result">
         <small>Quiz result</small>
@@ -974,15 +934,52 @@ Use generated markup that communicates the actual product surfaces without prete
 )}
 ```
 
-Keep the existing `Repo-informed preview` label for this generated preview.
+The outer `.project-preview` generated label remains `Repo-informed preview`.
 
-- [ ] **Step 3: Add Filsafit preview styling**
+- [ ] **Step 3: Replace `.portfolio` and `.cyber-*` CSS with Filsafit preview rules**
 
-Replace the old `.portfolio`, `.cyber-*` block with `.filsafit-*` rules using the existing portfolio palette, not a new site-wide design system. Use warm neutral/museum-like tones inside the preview so it is visually distinct from Liquid Utility while remaining contained inside `.project-preview`.
+Use a contained warm-neutral preview palette. Required layout contract:
 
-- [ ] **Step 4: If and only if the audit found a suitable real screenshot, add image preview support**
+```css
+.filsafit {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
 
-Extend the type:
+.filsafit-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.filsafit-nav strong {
+  margin-right: auto;
+}
+
+.filsafit-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.65fr);
+  gap: 1rem;
+  align-items: center;
+}
+
+.filsafit-bars {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.filsafit-bars i {
+  display: block;
+  height: 0.45rem;
+  border-radius: 999px;
+}
+```
+
+Fill typography, border, surface, and accent values using the same OKLCH approach already used by the other generated previews. Add a `max-width: 500px` override that stacks `.filsafit-body` into one column if the two-column preview becomes cramped.
+
+- [ ] **Step 4: Only if a screenshot qualified, add image-preview support**
+
+Change the type to:
 
 ```ts
 export type Preview =
@@ -990,68 +987,37 @@ export type Preview =
   | { kind: "image"; src: string; alt: string };
 ```
 
-Change `Project.preview` to `Preview`, update generated projects to `preview: { kind: "generated", type: "utility" }`, and render an actual `<img>` for `kind === "image"`.
+Change `Project.preview` to `Preview` and convert every generated project entry to the explicit object shape. The qualifying project uses the image shape.
 
-Image markup:
+`ProjectPreview` image branch:
 
 ```tsx
-<div className="project-preview project-preview-image">
-  <img src={preview.src} alt={preview.alt} loading="lazy" />
-</div>
+if (preview.kind === "image") {
+  return (
+    <div className="project-preview project-preview-image">
+      <img src={preview.src} alt={preview.alt} loading="lazy" />
+    </div>
+  );
+}
 ```
 
-For real images, do not render the `Repo-informed preview` label.
+Generated previews keep the `Repo-informed preview` pseudo-label. Add:
 
-- [ ] **Step 5: Verify previews at desktop and mobile widths**
+```css
+.project-preview-image::before {
+  content: none;
+}
 
-Run:
-
-```bash
-npm run test:e2e
+.project-preview-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
 ```
 
-Then manually inspect Chromium at approximately `1440x900`, `1024x768`, `760x900`, and `390x844`. There must be no clipped text that hides essential project information and no document-level horizontal overflow.
-
-- [ ] **Step 6: Commit**
-
-If generated previews only:
-
-```bash
-git add src/components/ProjectPreview.tsx src/styles/projects.css
-git commit -m "feat: add Filsafit project preview"
-```
-
-If at least one real screenshot is integrated, include the corresponding `public/projects/*` asset and type/data changes in the same commit.
-
----
-
-### Task 7: Align metadata and repository documentation, then run the full release gate
-
-**Files:**
-- Modify: `index.html`
-- Modify: `README.md`
-- Modify if needed: `.gitignore`
-
-**Interfaces:**
-- Metadata must describe the same portfolio positioning as the visible hero.
-- README must document all quality commands added by Task 1.
-
-- [ ] **Step 1: Replace generic metadata description**
-
-Use this description consistently for standard meta, Open Graph, and Twitter:
-
-```text
-Portfolio of Muhammad Dzikrul Kahfi, featuring web apps, Windows utilities, backend workflows, and selected developer projects.
-```
-
-Keep canonical URL, Open Graph image URL, Twitter card type, JSON-LD, favicon, Apple touch icon, and theme-color behavior unchanged.
-
-- [ ] **Step 2: Update README checks section**
-
-Use:
-
-```markdown
-## Checks
+- [ ] **Step 5: Verify and commit**
 
 ```bash
 npm run lint
@@ -1060,11 +1026,59 @@ npm run typecheck
 npm run build
 npm run test:e2e
 ```
+
+Manually inspect approximately `1440x900`, `1024x768`, `760x900`, and `390x844`. No essential text may be clipped and there must be no document-level horizontal overflow.
+
+Commit generated-only result:
+
+```bash
+git add src/components/ProjectPreview.tsx src/styles/projects.css
+git commit -m "feat: add Filsafit project preview"
 ```
 
-Also update the opening description so it says the portfolio uses concise project case studies and repo-informed previews, with real screenshots used only where suitable assets are available.
+If a real screenshot qualified, include the asset plus type/data changes in the same commit.
 
-- [ ] **Step 3: Run the complete verification gate**
+---
+
+### Task 7: Align metadata and documentation, then run the release gate
+
+**Files:**
+- Modify: `index.html`
+- Modify: `README.md`
+
+**Interfaces:**
+- Metadata positioning matches the visible hero.
+- README documents all quality commands.
+
+- [ ] **Step 1: Replace description metadata**
+
+Use this exact description for standard meta description, Open Graph description, and Twitter description:
+
+```text
+Portfolio of Muhammad Dzikrul Kahfi, featuring web apps, Windows utilities, backend workflows, and selected developer projects.
+```
+
+Keep canonical URL, OG image, Twitter card type, JSON-LD, favicon, Apple touch icon, and dynamic theme-color script unchanged.
+
+- [ ] **Step 2: Update README**
+
+Opening description:
+
+```text
+Personal portfolio for Muhammad Dzikrul Kahfi, built around concise project case studies, repo-informed previews, and real project screenshots when a safe, readable asset is available.
+```
+
+Checks section:
+
+```bash
+npm run lint
+npm run format:check
+npm run typecheck
+npm run build
+npm run test:e2e
+```
+
+- [ ] **Step 3: Run the final gate**
 
 ```bash
 npm run lint
@@ -1076,48 +1090,47 @@ npm run test:e2e
 
 Expected: all commands exit 0.
 
-- [ ] **Step 4: Check production output**
-
-Run:
+- [ ] **Step 4: Run production preview and inspect the release candidate**
 
 ```bash
 npm run preview
 ```
 
-Open `http://127.0.0.1:4173` and verify:
+At `http://127.0.0.1:4173`, verify:
 
-1. Dark theme loads without a flash that makes content unreadable.
-2. Light theme works and persists after reload.
-3. Work, About, Skills, Process, and Connect links reach their sections.
-4. Filsafit appears in Selected Work and the old previous-portfolio project does not.
-5. Project rows remain readable on desktop and mobile.
-6. Contact links point to GitHub, Instagram, and email correctly.
-7. No horizontal scrollbar appears at 390px viewport width.
+```text
+- Dark theme loads correctly.
+- Light theme toggles and persists after reload.
+- Work, About, Skills, Process, and Connect anchors work.
+- Filsafit appears in Selected Work.
+- The old previous-portfolio project no longer appears.
+- Project rows remain readable at desktop and mobile widths.
+- GitHub, Instagram, and email links point to the expected destinations.
+- 390px viewport width has no document-level horizontal scrollbar.
+```
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add index.html README.md .gitignore
+git add index.html README.md
 git commit -m "docs: align portfolio metadata and checks"
 ```
 
 ---
 
-## Final Self-Review Checklist
+## Final Self-Review
 
-Before calling implementation complete, confirm every item:
-
-- [ ] The existing visual identity is preserved rather than redesigned.
-- [ ] `App.tsx` is composition-level only.
-- [ ] Project, skill, and process data are outside component implementation.
-- [ ] `Portfolio` has been replaced by `Filsafit` in selected work.
-- [ ] Every featured project has `problem`, `technicalDecision`, `result`, and `status`.
-- [ ] Generic manifesto wording is gone.
+- [ ] Existing visual identity is preserved.
+- [ ] `App.tsx` contains composition only.
+- [ ] Project, skill, and process content lives outside component implementation.
+- [ ] `Portfolio` is replaced by `Filsafit` in Selected Work.
+- [ ] Every featured project renders Problem, Technical decision, Result, and Status.
+- [ ] Generic manifesto language is removed.
 - [ ] User-facing copy contains no em dash.
-- [ ] No metric or result was invented.
+- [ ] No metric or result is invented.
 - [ ] Reduced-motion behavior exists.
-- [ ] The broad global transition rule is gone.
-- [ ] Screenshot use follows the four acceptance rules, or generated previews remain because no safe screenshot qualified.
+- [ ] Broad global transitions are removed.
+- [ ] Screenshot use follows the four acceptance checks, or generated previews remain because no safe screenshot qualified.
 - [ ] `npm run lint` passes.
 - [ ] `npm run format:check` passes.
 - [ ] `npm run typecheck` passes.
