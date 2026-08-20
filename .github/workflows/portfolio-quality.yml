@@ -1,0 +1,51 @@
+name: Portfolio Quality
+
+on:
+  push:
+    branches:
+      - portfolio-v2-improvements
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Browser smoke tests
+        run: npm run test:e2e
+
+      - name: Upload resolved lockfile
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resolved-package-lock
+          path: package-lock.json
