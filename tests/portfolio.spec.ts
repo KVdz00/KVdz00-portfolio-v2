@@ -5,16 +5,22 @@ test("renders core portfolio content", async ({ page }) => {
   await expect(
     page.getByRole("heading", { level: 1, name: /Muhammad Dzikrul Kahfi/i }),
   ).toBeVisible();
-  await expect(page.getByText("Liquid Utility", { exact: true })).toBeVisible();
-  await expect(page.getByText("Filsafit", { exact: true })).toBeVisible();
-  await expect(page.getByText("ModToggle", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Liquid Utility", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Filsafit", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "ModToggle", exact: true }),
+  ).toBeVisible();
 });
 
 test("primary navigation changes the hash", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "Work" }).click();
+  await page.getByRole("link", { name: "Work", exact: true }).click();
   await expect(page).toHaveURL(/#work$/);
-  await page.getByRole("link", { name: "About" }).click();
+  await page.getByRole("link", { name: "About", exact: true }).click();
   await expect(page).toHaveURL(/#about$/);
 });
 
