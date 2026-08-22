@@ -21,9 +21,13 @@ npm run dev
 ## Checks
 
 ```bash
-npm test -- --run
+npm audit --omit=dev --audit-level=high
+npm run lint
+npm run format:check
+npm test -- --run --maxWorkers=1
 npm run typecheck
 npm run build
+npm run test:e2e
 ```
 
 ## Architecture
@@ -32,4 +36,3 @@ npm run build
 - `src/components/` contains focused page sections and interactive controls.
 - `src/styles.css` owns design tokens, layout, responsive behavior, themes, and reduced motion.
 - Core portfolio content is local and has no runtime API dependency.
-

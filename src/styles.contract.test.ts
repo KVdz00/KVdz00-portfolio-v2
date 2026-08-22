@@ -28,19 +28,25 @@ describe("visual system contract", () => {
 
   it("keeps the sticky header visually opaque without glass blur", () => {
     expect(styles).toMatch(/\.site-header\s*\{[^}]*background: var\(--base\)/s);
-    expect(styles).toMatch(/\.site-header::before\s*\{[^}]*background: var\(--header\)/s);
+    expect(styles).toMatch(
+      /\.site-header::before\s*\{[^}]*background: var\(--header\)/s,
+    );
     expect(styles).not.toContain("backdrop-filter");
   });
 
   it("hides collapsed mobile navigation targets and restores desktop links", () => {
-    expect(styles).toMatch(/\.site-nav:not\(\.is-open\) a\s*\{[^}]*visibility: hidden/s);
+    expect(styles).toMatch(
+      /\.site-nav:not\(\.is-open\) a\s*\{[^}]*visibility: hidden/s,
+    );
     expect(styles).toMatch(
       /@media \(min-width: 46rem\)[\s\S]*?\.site-nav:not\(\.is-open\) a\s*\{[^}]*visibility: visible/s,
     );
   });
 
   it("keeps the small primary-contact label at full text contrast", () => {
-    expect(styles).toMatch(/\.contact__primary small\s*\{[^}]*color: currentColor/s);
+    expect(styles).toMatch(
+      /\.contact__primary small\s*\{[^}]*color: currentColor/s,
+    );
   });
 
   it("counts proof items independently from the hidden heading at tablet widths", () => {

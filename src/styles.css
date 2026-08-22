@@ -1115,7 +1115,9 @@ section {
 .contact__actions a,
 .site-footer a,
 .skip-link {
-  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), background-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (hover: hover) {

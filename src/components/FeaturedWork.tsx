@@ -28,8 +28,9 @@ export function FeaturedWork({
         </div>
       ) : (
         <p className="work-empty" role="status">
-          Project details are being reviewed. <a href={`mailto:${profile.email}`}>Email me</a>{" "}
-          for current work samples.
+          Project details are being reviewed.{" "}
+          <a href={`mailto:${profile.email}`}>Email me</a> for current work
+          samples.
         </p>
       )}
     </section>

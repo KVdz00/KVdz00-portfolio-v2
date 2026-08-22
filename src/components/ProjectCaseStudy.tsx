@@ -49,7 +49,10 @@ export function ProjectCaseStudy({
           </div>
         </dl>
 
-        <ul className="stack-list" aria-label={`${project.name} technology stack`}>
+        <ul
+          className="stack-list"
+          aria-label={`${project.name} technology stack`}
+        >
           {project.stack.map((item) => (
             <li key={item}>{item}</li>
           ))}

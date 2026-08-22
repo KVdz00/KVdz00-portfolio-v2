@@ -10,7 +10,9 @@ describe("portfolio page", () => {
     expect(screen.getByRole("main")).toBeInTheDocument();
     expect(screen.getByRole("contentinfo")).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole("heading", { name: /engineering capabilities/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /engineering capabilities/i }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
         name: /looking for an internship or junior software role/i,
@@ -25,15 +27,16 @@ describe("portfolio page", () => {
     expect(contact).toBeInTheDocument();
 
     const contactLinks = within(contact as HTMLElement);
-    expect(contactLinks.getByRole("link", { name: /email kahfi/i })).toHaveAttribute(
-      "href",
-      "mailto:kahfiworks.id@gmail.com",
-    );
+    expect(
+      contactLinks.getByRole("link", { name: /email kahfi/i }),
+    ).toHaveAttribute("href", "mailto:kahfiworks.id@gmail.com");
     expect(contactLinks.getByRole("link", { name: "GitHub" })).toHaveAttribute(
       "href",
       "https://github.com/KVdz00",
     );
-    expect(contactLinks.getByRole("link", { name: "LinkedIn" })).toHaveAttribute(
+    expect(
+      contactLinks.getByRole("link", { name: "LinkedIn" }),
+    ).toHaveAttribute(
       "href",
       "https://www.linkedin.com/in/muhammad-dzikrul-kahfi-0ba869386",
     );
@@ -50,8 +53,8 @@ describe("portfolio page", () => {
   it("includes the visible footer brand in its back-to-top name", () => {
     render(<App />);
 
-    expect(screen.getByRole("link", { name: /kv \/ dz00.*back to top/i })).toHaveTextContent(
-      "KV / DZ00",
-    );
+    expect(
+      screen.getByRole("link", { name: /kv \/ dz00.*back to top/i }),
+    ).toHaveTextContent("KV / DZ00");
   });
 });

@@ -13,8 +13,13 @@ describe("SiteHeader", () => {
     const user = userEvent.setup();
     render(<SiteHeader />);
 
-    expect(screen.getByRole("link", { name: /kv \/ dz00 home/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Work" })).toHaveAttribute("href", "#work");
+    expect(
+      screen.getByRole("link", { name: /kv \/ dz00 home/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Work" })).toHaveAttribute(
+      "href",
+      "#work",
+    );
 
     const menu = screen.getByRole("button", { name: /menu.*open navigation/i });
     expect(menu).toHaveAttribute("aria-expanded", "false");
@@ -24,7 +29,9 @@ describe("SiteHeader", () => {
     expect(menu).toHaveAttribute("aria-expanded", "true");
     expect(menu).toHaveTextContent("Close");
     expect(menu).toHaveAccessibleName(/close.*navigation/i);
-    expect(screen.getByRole("navigation", { name: /primary/i })).toHaveClass("is-open");
+    expect(screen.getByRole("navigation", { name: /primary/i })).toHaveClass(
+      "is-open",
+    );
 
     fireEvent.keyDown(window, { key: "Escape" });
     expect(menu).toHaveAttribute("aria-expanded", "false");
@@ -65,7 +72,9 @@ describe("SiteHeader", () => {
       expect(document.documentElement.dataset.theme).toBe("dark");
     });
 
-    await user.click(screen.getByRole("button", { name: /switch to light theme/i }));
+    await user.click(
+      screen.getByRole("button", { name: /switch to light theme/i }),
+    );
 
     expect(document.documentElement.dataset.theme).toBe("light");
     expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe("light");
@@ -93,12 +102,16 @@ describe("SiteHeader", () => {
 
   it("defaults to dark and keeps theme switching usable when storage throws", async () => {
     const user = userEvent.setup();
-    const getItem = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
-      throw new Error("storage read blocked");
-    });
-    const setItem = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
-      throw new Error("storage write blocked");
-    });
+    const getItem = vi
+      .spyOn(Storage.prototype, "getItem")
+      .mockImplementation(() => {
+        throw new Error("storage read blocked");
+      });
+    const setItem = vi
+      .spyOn(Storage.prototype, "setItem")
+      .mockImplementation(() => {
+        throw new Error("storage write blocked");
+      });
 
     try {
       expect(() => render(<SiteHeader />)).not.toThrow();
@@ -107,7 +120,9 @@ describe("SiteHeader", () => {
         expect(document.documentElement.dataset.theme).toBe("dark");
       });
 
-      await user.click(screen.getByRole("button", { name: /switch to light theme/i }));
+      await user.click(
+        screen.getByRole("button", { name: /switch to light theme/i }),
+      );
       expect(document.documentElement.dataset.theme).toBe("light");
     } finally {
       getItem.mockRestore();

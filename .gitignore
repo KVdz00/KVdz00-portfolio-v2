@@ -7,3 +7,6 @@ docs/
 .env
 .env.*
 *.local
+.playwright-cli/
+playwright-report/
+test-results/

@@ -51,7 +51,9 @@ export function SiteHeader() {
           type="button"
           aria-controls="primary-navigation"
           aria-expanded={isMenuOpen}
-          aria-label={isMenuOpen ? "Close, close navigation" : "Menu, open navigation"}
+          aria-label={
+            isMenuOpen ? "Close, close navigation" : "Menu, open navigation"
+          }
           onClick={() => setIsMenuOpen((open) => !open)}
         >
           {isMenuOpen ? (

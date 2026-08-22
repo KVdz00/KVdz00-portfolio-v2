@@ -13,20 +13,23 @@ describe("recruiter introduction", () => {
         name: /i build useful software for real workflows/i,
       }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/grade 12 vocational student/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/grade 12 vocational student/i),
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /email me/i })).toHaveAttribute(
       "href",
       "mailto:kahfiworks.id@gmail.com",
     );
-    expect(screen.getByRole("link", { name: /view selected work/i })).toHaveAttribute(
-      "href",
-      "#work",
-    );
+    expect(
+      screen.getByRole("link", { name: /view selected work/i }),
+    ).toHaveAttribute("href", "#work");
   });
 
   it("replaces a failed local avatar with the KV monogram", () => {
     render(<Hero />);
-    fireEvent.error(screen.getByRole("img", { name: /muhammad dzikrul kahfi/i }));
+    fireEvent.error(
+      screen.getByRole("img", { name: /muhammad dzikrul kahfi/i }),
+    );
     expect(screen.getByText("KV")).toBeInTheDocument();
   });
 

@@ -55,8 +55,7 @@ export const profile: Profile = {
   timezone: "UTC +7",
   email: "kahfiworks.id@gmail.com",
   github: "https://github.com/KVdz00",
-  linkedin:
-    "https://www.linkedin.com/in/muhammad-dzikrul-kahfi-0ba869386",
+  linkedin: "https://www.linkedin.com/in/muhammad-dzikrul-kahfi-0ba869386",
 };
 
 export const proofItems = [
@@ -75,8 +74,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
       "A Windows utility that brings game launching, hardware snapshots, system care, local media preview, and application settings into one desktop shell.",
     context:
       "The product coordinates interface-heavy workflows with native Windows and system-level operations.",
-    role:
-      "I shape the React interface architecture and keep native responsibilities behind typed Rust commands in Tauri.",
+    role: "I shape the React interface architecture and keep native responsibilities behind typed Rust commands in Tauri.",
     contributions: [
       "Built modular workflows for games, hardware, system care, media, and settings.",
       "Kept UI state separate from native commands and system boundaries.",
@@ -100,8 +98,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
       "A philosophy learning platform with an encyclopedia, school comparison, scored quiz, profiles, authentication, history, and shareable result cards.",
     context:
       "The application needs clear learning flows while protecting user data and keeping quiz scoring trustworthy.",
-    role:
-      "I work across product UI, application flows, domain logic, and Supabase-backed data and authentication.",
+    role: "I work across product UI, application flows, domain logic, and Supabase-backed data and authentication.",
     contributions: [
       "Designed encyclopedia, comparison, quiz, profile, history, and result-sharing flows.",
       "Separated quiz scoring into testable domain logic.",
@@ -125,8 +122,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
       "A responsive production-house website with client-facing content, authentication, forms, and administrative content workflows.",
     context:
       "The site has to present production services clearly while supporting maintainable content operations behind the public experience.",
-    role:
-      "I implemented the responsive interface and connected public pages with Laravel-backed admin, authentication, form, and content flows.",
+    role: "I implemented the responsive interface and connected public pages with Laravel-backed admin, authentication, form, and content flows.",
     contributions: [
       "Built responsive marketing and portfolio sections.",
       "Implemented admin authentication and structured content workflows.",
@@ -181,7 +177,8 @@ export const additionalWork = [
   {
     name: "QuickDL",
     stack: "Utility tooling",
-    summary: "A focused downloader utility built around a small practical workflow.",
+    summary:
+      "A focused downloader utility built around a small practical workflow.",
   },
   {
     name: "Website Kota Medan",

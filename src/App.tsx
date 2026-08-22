@@ -10,7 +10,9 @@ import { SiteHeader } from "./components/SiteHeader";
 function App() {
   return (
     <>
-      <a className="skip-link" href="#main">Skip to content</a>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
       <SiteHeader />
       <main id="main">
         <Hero />

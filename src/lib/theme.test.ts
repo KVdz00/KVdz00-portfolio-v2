@@ -7,9 +7,11 @@ describe("theme helpers", () => {
   });
 
   it("defaults to dark when persisted theme cannot be read", () => {
-    const getItem = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
-      throw new Error("storage read blocked");
-    });
+    const getItem = vi
+      .spyOn(Storage.prototype, "getItem")
+      .mockImplementation(() => {
+        throw new Error("storage read blocked");
+      });
 
     try {
       expect(readInitialTheme()).toBe("dark");
@@ -19,18 +21,19 @@ describe("theme helpers", () => {
   });
 
   it("applies the DOM theme when persistence fails", () => {
-    const setItem = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
-      throw new Error("storage write blocked");
-    });
+    const setItem = vi
+      .spyOn(Storage.prototype, "setItem")
+      .mockImplementation(() => {
+        throw new Error("storage write blocked");
+      });
 
     try {
       expect(() => applyTheme("light")).not.toThrow();
       expect(document.documentElement.dataset.theme).toBe("light");
       expect(document.documentElement.style.colorScheme).toBe("light");
-      expect(document.querySelector('meta[name="theme-color"]')).toHaveAttribute(
-        "content",
-        "#f6f8fa",
-      );
+      expect(
+        document.querySelector('meta[name="theme-color"]'),
+      ).toHaveAttribute("content", "#f6f8fa");
     } finally {
       setItem.mockRestore();
     }

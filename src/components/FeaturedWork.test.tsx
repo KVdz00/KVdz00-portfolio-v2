@@ -9,8 +9,9 @@ describe("FeaturedWork", () => {
 
     expect(articles).toHaveLength(3);
     expect(
-      articles.map((article) =>
-        within(article).getByRole("heading", { level: 3 }).textContent,
+      articles.map(
+        (article) =>
+          within(article).getByRole("heading", { level: 3 }).textContent,
       ),
     ).toEqual(["Liquid Utility", "Filsafit", "Arindra Production Web"]);
   });

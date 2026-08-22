@@ -2,7 +2,11 @@ import { capabilities } from "../data/portfolio";
 
 export function Capabilities() {
   return (
-    <section className="capabilities" id="capabilities" aria-labelledby="capabilities-title">
+    <section
+      className="capabilities"
+      id="capabilities"
+      aria-labelledby="capabilities-title"
+    >
       <header className="section-heading">
         <p className="section-kicker">Repeated strengths</p>
         <h2 id="capabilities-title">Engineering capabilities</h2>
