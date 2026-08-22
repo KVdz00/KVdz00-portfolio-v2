@@ -7,6 +7,21 @@ const navigationLinks = [
   ["Contact", "#contact"],
 ] as const;
 
+const reducedMotionTransitionThresholdMs = 0.01;
+
+function cssTimeToMilliseconds(duration: string) {
+  const normalized = duration.trim();
+  const value = Number.parseFloat(normalized);
+
+  if (normalized.endsWith("ms")) {
+    return value;
+  }
+  if (normalized.endsWith("s")) {
+    return value * 1000;
+  }
+  return Number.NaN;
+}
+
 async function openNavigationOnMobile(page: Page, projectName: string) {
   if (projectName === "mobile-chromium") {
     await page
@@ -106,12 +121,20 @@ test("reduced motion disables smooth scrolling and long transitions", async ({
 
   const values = await page.evaluate(() => ({
     scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
-    transitionDuration: getComputedStyle(
+    transitionDurations: getComputedStyle(
       document.querySelector<HTMLAnchorElement>(".button")!,
-    ).transitionDuration,
+    ).transitionDuration.split(","),
   }));
   expect(values.scrollBehavior).toBe("auto");
-  expect(values.transitionDuration).not.toContain("0.18s");
+
+  const transitionDurationsMs = values.transitionDurations.map(
+    cssTimeToMilliseconds,
+  );
+  expect(transitionDurationsMs).not.toHaveLength(0);
+  for (const durationMs of transitionDurationsMs) {
+    expect(Number.isFinite(durationMs)).toBe(true);
+    expect(durationMs).toBeLessThanOrEqual(reducedMotionTransitionThresholdMs);
+  }
 });
 
 test("mobile menu supports Menu and Close keyboard behavior", async ({
