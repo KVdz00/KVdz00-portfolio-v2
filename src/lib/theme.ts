@@ -12,8 +12,12 @@ export function readInitialTheme(): Theme {
     return "dark";
   }
 
-  const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
-  return saved === "light" || saved === "dark" ? saved : "dark";
+  try {
+    const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
+    return saved === "light" || saved === "dark" ? saved : "dark";
+  } catch {
+    return "dark";
+  }
 }
 
 export function applyTheme(theme: Theme): void {
@@ -22,5 +26,9 @@ export function applyTheme(theme: Theme): void {
   document
     .querySelector('meta[name="theme-color"]')
     ?.setAttribute("content", themeColors[theme]);
-  window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  try {
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch {
+    return;
+  }
 }

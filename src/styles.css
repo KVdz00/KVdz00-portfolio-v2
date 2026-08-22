@@ -1177,10 +1177,16 @@ section {
 @media (min-width: 46rem) {
   .site-header {
     grid-template-columns: auto 1fr auto;
+    grid-template-areas: "brand nav actions";
     padding-inline: var(--page-pad);
   }
 
+  .brand-mark {
+    grid-area: brand;
+  }
+
   .site-nav {
+    grid-area: nav;
     position: static;
     display: flex;
     justify-content: center;
@@ -1203,6 +1209,10 @@ section {
     display: none;
   }
 
+  .header-actions {
+    grid-area: actions;
+  }
+
   .proof-strip,
   .capability-grid,
   .case-study__facts {
@@ -1222,7 +1232,7 @@ section {
     border-right: 1px solid var(--border);
   }
 
-  .proof-item:nth-child(2n) {
+  .proof-item:nth-of-type(2n) {
     border-right: 0;
   }
 
@@ -1303,7 +1313,7 @@ section {
   }
 
   .proof-item,
-  .proof-item:nth-child(2n) {
+  .proof-item:nth-of-type(2n) {
     border-right: 1px solid var(--border);
     border-bottom: 0;
   }

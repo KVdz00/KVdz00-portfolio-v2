@@ -62,7 +62,7 @@ export const profile: Profile = {
 export const proofItems = [
   { label: "Web", value: "React / Next.js / Laravel" },
   { label: "Desktop", value: "Tauri / Rust" },
-  { label: "Data", value: "Supabase / PostgreSQL / SQL" },
+  { label: "Data", value: "Supabase / PostgreSQL / MySQL / SQLite" },
   { label: "Delivery", value: "Tests / CI / Docs / Packaged checks" },
 ] as const satisfies readonly ProofItem[];
 

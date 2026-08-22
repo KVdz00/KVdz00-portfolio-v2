@@ -42,4 +42,11 @@ describe("visual system contract", () => {
   it("keeps the small primary-contact label at full text contrast", () => {
     expect(styles).toMatch(/\.contact__primary small\s*\{[^}]*color: currentColor/s);
   });
+
+  it("counts proof items independently from the hidden heading at tablet widths", () => {
+    expect(styles).toMatch(
+      /@media \(min-width: 46rem\)[\s\S]*?\.proof-item:nth-of-type\(2n\)\s*\{[^}]*border-right: 0/s,
+    );
+    expect(styles).not.toContain(".proof-item:nth-child(2n)");
+  });
 });

@@ -46,4 +46,12 @@ describe("portfolio page", () => {
       expect(container.querySelectorAll(`#${id}`)).toHaveLength(1);
     }
   });
+
+  it("includes the visible footer brand in its back-to-top name", () => {
+    render(<App />);
+
+    expect(screen.getByRole("link", { name: /kv \/ dz00.*back to top/i })).toHaveTextContent(
+      "KV / DZ00",
+    );
+  });
 });

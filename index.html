@@ -40,7 +40,12 @@
     <script>
       (() => {
         const key = "kvdz00-portfolio-theme";
-        const theme = localStorage.getItem(key) === "light" ? "light" : "dark";
+        let theme = "dark";
+        try {
+          theme = localStorage.getItem(key) === "light" ? "light" : "dark";
+        } catch {
+          theme = "dark";
+        }
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;
         document

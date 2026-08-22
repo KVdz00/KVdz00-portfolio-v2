@@ -36,6 +36,9 @@ describe("portfolio content", () => {
 
   it("contains all approved proof, capability, and additional-work groups", () => {
     expect(proofItems).toHaveLength(4);
+    expect(proofItems.find((item) => item.label === "Data")?.value).toBe(
+      "Supabase / PostgreSQL / MySQL / SQLite",
+    );
     expect(capabilities).toHaveLength(4);
     expect(additionalWork.map((project) => project.name)).toEqual([
       "Toggle-Mod",
