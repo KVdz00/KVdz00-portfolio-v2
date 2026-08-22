@@ -246,6 +246,10 @@ section {
   display: grid;
 }
 
+.site-nav:not(.is-open) a {
+  visibility: hidden;
+}
+
 .site-nav a,
 .menu-toggle,
 .theme-toggle {
@@ -1073,7 +1077,7 @@ section {
 }
 
 .contact__primary small {
-  color: color-mix(in oklch, currentColor 72%, transparent);
+  color: currentColor;
   font-size: 0.62rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1184,6 +1188,10 @@ section {
     padding: 0;
     border: 0;
     background: transparent;
+  }
+
+  .site-nav:not(.is-open) a {
+    visibility: visible;
   }
 
   .site-nav a {
