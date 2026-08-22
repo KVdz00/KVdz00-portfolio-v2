@@ -1,3 +1,4 @@
+import process from "node:process";
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
@@ -10,7 +11,7 @@ export default defineConfig({
   webServer: {
     command: "npm run dev",
     url: "http://127.0.0.1:5173",
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
   },
   projects: [
     {

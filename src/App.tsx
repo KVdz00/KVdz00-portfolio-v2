@@ -1,10 +1,11 @@
-import { Header } from "./components/Header";
-import { About } from "./sections/About";
-import { Connect } from "./sections/Connect";
-import { Hero } from "./sections/Hero";
-import { Process } from "./sections/Process";
-import { Skills } from "./sections/Skills";
-import { Work } from "./sections/Work";
+import { Capabilities } from "./components/Capabilities";
+import { Contact } from "./components/Contact";
+import { FeaturedWork } from "./components/FeaturedWork";
+import { Hero } from "./components/Hero";
+import { ProfileAndMoreWork } from "./components/ProfileAndMoreWork";
+import { ProofStrip } from "./components/ProofStrip";
+import { SiteFooter } from "./components/SiteFooter";
+import { SiteHeader } from "./components/SiteHeader";
 
 function App() {
   return (
@@ -12,19 +13,16 @@ function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <Header />
+      <SiteHeader />
       <main id="main">
         <Hero />
-        <About />
-        <Work />
-        <Skills />
-        <Process />
-        <Connect />
+        <ProofStrip />
+        <FeaturedWork />
+        <Capabilities />
+        <ProfileAndMoreWork />
+        <Contact />
       </main>
-      <footer className="site-footer">
-        <span>Copyright 2026 Muhammad Dzikrul Kahfi</span>
-        <span>KV</span>
-      </footer>
+      <SiteFooter />
     </>
   );
 }
