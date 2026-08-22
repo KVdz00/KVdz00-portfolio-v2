@@ -10,6 +10,17 @@ The current portfolio is a single-page React application with a strong amount of
 
 The overhaul should use the visual DNA of the `KVdz00` GitHub profile without cloning GitHub's interface. The result must help recruiters quickly understand the candidate, see credible engineering evidence, and start a conversation.
 
+## Applied Design Read
+
+This is a recruiter portfolio for internship and junior software roles. The visual direction is evidence-first GitHub DNA with `ENERGY 2`, `RHYTHM 3`, and `MOTION 1`.
+
+- GitHub-like density supports technical credibility without turning the page into a dashboard clone.
+- System sans and mono typography keep the site fast, readable, and consistent with the existing identity.
+- Flat surfaces and thin rules organize evidence; cards appear only when an element needs a clear interaction or grouping affordance.
+- Blue is reserved for actions, teal for identity, and green for explicit availability so color retains meaning.
+- Motion is limited to control feedback and state changes because the page should feel stable during recruiter scanning.
+- Project previews use purpose-built interface fragments instead of decorative illustrations because the work itself is the evidence.
+
 ## Product Positioning
 
 ### Primary audience
@@ -100,7 +111,7 @@ The desktop header contains:
 - Contact
 - Dark/light theme control
 
-On narrow screens, the links move into an accessible disclosure menu. The menu button exposes its expanded state, closes after a navigation choice, and supports Escape to close. The theme control remains directly available.
+On narrow screens, the links move into an accessible disclosure menu. The control visibly says `Menu` or `Close`, exposes its expanded state, closes after a navigation choice, and supports Escape to close. The theme control remains directly available.
 
 ### Hero
 
@@ -209,7 +220,7 @@ The index may state the stack and one-line purpose. It must not create empty dem
 
 Closing headline:
 
-> Open to the next opportunity.
+> Looking for an internship or junior software role.
 
 The supporting copy invites internship, vocational placement, and junior software role conversations.
 
@@ -223,19 +234,21 @@ GitHub DNA without copying GitHub: flat surfaces, thin rules, practical states, 
 
 ### Dark theme tokens
 
-- Canvas: `#010409`
-- Base: `#0d1117`
-- Surface: `#161b22`
-- Border: `#30363d`
-- Primary text: `#f0f6fc`
-- Muted text: `#8b949e`
-- Action blue: `#2f81f7`
-- Identity teal: `#2dd4bf`
-- Availability green: `#3fb950`
+- Canvas: `oklch(13% 0.015 255)`
+- Base: `oklch(17% 0.018 255)`
+- Surface: `oklch(21% 0.02 255)`
+- Border: `oklch(32% 0.025 255)`
+- Primary text: `oklch(96% 0.008 250)`
+- Muted text: `oklch(68% 0.025 250)`
+- Action blue: `oklch(62% 0.19 255)`
+- Identity teal: `oklch(78% 0.13 183)`
+- Availability green: `oklch(72% 0.18 145)`
+
+CSS color tokens use OKLCH and avoid pure black or white. Metadata and generated binary assets may use reviewed sRGB values where renderer compatibility requires them.
 
 ### Light theme
 
-The light theme uses the same hierarchy with a warm-white canvas, white surfaces, ink text, GitHub blue actions, and a darker teal identity accent. Light mode is a token substitution, not a separate layout.
+The light theme uses the same hierarchy with a warm-white canvas, softly tinted surfaces, ink text, GitHub blue actions, and a darker teal identity accent. Light mode is a token substitution, not a separate layout.
 
 ### Color semantics
 
@@ -333,11 +346,13 @@ Theme selection is stored in `localStorage`. Dark is the default for first-time 
 - External links use safe `target` and `rel` attributes where a new tab is appropriate.
 - The email action uses a direct `mailto:` URL.
 - The site must not depend on GitHub, shields, visitor counters, or third-party cards at runtime.
-- No blank loading or error panel is necessary because core content is static.
+- Runtime loading UI is unnecessary because core content is static. An empty featured-project collection shows a concise status and email path instead of a blank section.
 
 ## Responsive Behavior
 
-### 320-767 px
+Breakpoints follow content pressure instead of named device classes. The implementation starts with the narrow layout and adds wider arrangements only when navigation, line length, or evidence columns need more room.
+
+### Narrow layout
 
 - Compact sticky header with disclosure navigation.
 - Single-column hero.
@@ -345,14 +360,16 @@ Theme selection is stored in `localStorage`. Dark is the default for first-time 
 - Proof items use a compact grid.
 - Each project shows copy before its preview.
 - Capability and contact content stack in source order.
+- The mobile type scale keeps the `h1` near 36 px, section headings near 28 px, body text near 16 px, and metadata near 12 px.
+- Interactive controls use at least 44 px targets with enough separation to avoid adjacent mis-taps.
 
-### 768-1023 px
+### Intermediate layout
 
 - Hero may use one or two columns depending on available width.
 - Project copy and preview use a balanced stacked or two-column layout.
 - Navigation remains readable without clipped actions.
 
-### 1024 px and above
+### Wide layout
 
 - Editorial grid with section rails and case-study bands.
 - Hero text and profile panel share the first viewport.
@@ -402,6 +419,7 @@ Cover:
 - Theme control updates document state and persisted preference.
 - Mobile navigation exposes and updates its expanded state.
 - Avatar failure reveals the monogram fallback.
+- An empty featured-project collection reveals the status and email fallback.
 
 ### Build checks
 
@@ -425,6 +443,16 @@ Inspect at 320, 768, 1024, and 1440 px:
 - External links and email actions use the approved URLs.
 
 Run an accessibility scan if the available browser tooling supports it.
+
+### Requested skill gates
+
+- Agent Skills frontend engineering: verify production semantics, WCAG AA intent, responsive states, keyboard behavior, and 320, 768, 1024, and 1440 px coverage.
+- Anti Slop UI: reject generic gradients, decorative glow, excessive rounding, nested cards, fake metrics, dead navigation, and icon-only mobile navigation labels.
+- Anti Slop Copywriting: audit every public sentence for generic claims, inflated language, unsupported facts, filler, em dashes, and double-hyphen asides.
+- Anti Slop Code: keep comments only where they explain a non-obvious constraint or reason.
+- Anti Slop Layout Mobile: verify reflow rather than shrinkage, 44 px touch targets, tap equivalents, no accidental clipping, and a visible `Menu` label.
+- Impeccable: re-run context and brand checks, preserve the approved register identity, and document the purpose of typography, color, shape, motion, icons, and project previews.
+- Anti Slop Delivery Gate: report each applicable rule as `PASS` with concrete evidence before delivery. Static content has no loading lifecycle; featured-work empty state and avatar failure remain explicit fallbacks.
 
 ## Implementation Scope
 
