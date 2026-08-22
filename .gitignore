@@ -2,6 +2,8 @@ node_modules
 dist
 qa*
 docs/
+.worktrees/
+.superpowers/
 .env
 .env.*
 *.local
