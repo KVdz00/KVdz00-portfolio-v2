@@ -55,11 +55,25 @@
     <script>
       (() => {
         const key = "kvdz00-portfolio-theme";
-        let theme = "dark";
+        let theme = null;
         try {
-          theme = localStorage.getItem(key) === "light" ? "light" : "dark";
+          const saved = localStorage.getItem(key);
+          if (saved === "light" || saved === "dark") {
+            theme = saved;
+          }
         } catch {
-          theme = "dark";
+          theme = null;
+        }
+        if (theme === null) {
+          try {
+            theme =
+              typeof window.matchMedia === "function" &&
+              window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark";
+          } catch {
+            theme = "dark";
+          }
         }
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;

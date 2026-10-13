@@ -63,6 +63,16 @@ describe("SiteHeader", () => {
     expect(menu).toHaveFocus();
   });
 
+  it("announces the theme action consistently in label and tooltip", () => {
+    window.localStorage.setItem(THEME_STORAGE_KEY, "dark");
+    render(<SiteHeader />);
+
+    const toggle = screen.getByRole("button", {
+      name: "Switch to light theme",
+    });
+    expect(toggle).toHaveAttribute("title", "Switch to light theme");
+  });
+
   it("persists and applies the selected theme", async () => {
     const user = userEvent.setup();
     window.localStorage.setItem(THEME_STORAGE_KEY, "dark");
