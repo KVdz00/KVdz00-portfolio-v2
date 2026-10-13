@@ -7,7 +7,12 @@ import { profile } from "../data/portfolio";
 
 export function Contact() {
   return (
-    <section className="contact" id="contact" aria-labelledby="contact-title">
+    <section
+      className="contact"
+      id="contact"
+      tabIndex={-1}
+      aria-labelledby="contact-title"
+    >
       <div>
         <p className="section-kicker">Contact / UTC +7</p>
         <h2 id="contact-title">

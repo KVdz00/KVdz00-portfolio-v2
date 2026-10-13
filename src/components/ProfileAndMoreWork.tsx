@@ -5,6 +5,7 @@ export function ProfileAndMoreWork() {
     <section
       className="profile-section"
       id="profile"
+      tabIndex={-1}
       aria-labelledby="profile-title"
     >
       <div className="profile-section__intro">
