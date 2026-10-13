@@ -71,7 +71,19 @@ test("primary navigation exposes and follows approved section links", async ({
   await expect(page).toHaveURL(/#work$/);
 });
 
+test("first visit follows the system color scheme", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.evaluate(() => window.localStorage.clear());
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+});
+
 test("theme selection persists after a reload", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/");
   await page
     .getByRole("button", { name: "Switch to light theme", exact: true })
