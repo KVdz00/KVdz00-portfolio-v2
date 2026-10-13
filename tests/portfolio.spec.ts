@@ -115,6 +115,35 @@ test("contact destinations remain verified", async ({ page }) => {
   ).toHaveAttribute("href", "https://github.com/KVdz00");
 });
 
+test("enlarged text does not cause horizontal overflow", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.addInitScript(() => {
+    document.documentElement.style.fontSize = "32px";
+  });
+  await page.goto("/");
+
+  const width = await page.evaluate(() => ({
+    client: document.documentElement.clientWidth,
+    scroll: document.documentElement.scrollWidth,
+  }));
+  expect(width.scroll).toBeLessThanOrEqual(width.client + 1);
+});
+
+test("project previews keep a bounded landscape shape on desktop", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop-chromium",
+    "desktop-only behavior",
+  );
+  await page.goto("/");
+
+  const box = await page.locator(".product-preview").first().boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.height).toBeLessThan(box!.width);
+  expect(box!.height).toBeLessThanOrEqual(386);
+});
+
 test("document does not overflow horizontally", async ({ page }) => {
   await page.goto("/");
 

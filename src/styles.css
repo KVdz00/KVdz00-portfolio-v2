@@ -117,6 +117,7 @@ h1,
 h2,
 h3 {
   text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 h2 {
@@ -179,7 +180,7 @@ section {
   background: var(--base);
   color: var(--text);
   font-family: var(--mono);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
@@ -230,7 +231,7 @@ section {
 
 .brand-mark span {
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.06em;
 }
@@ -268,7 +269,7 @@ section {
 .menu-toggle,
 .theme-toggle {
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.05em;
 }
@@ -375,7 +376,7 @@ section[tabindex="-1"]:focus {
 .section-kicker {
   color: var(--identity);
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 1.5;
@@ -415,7 +416,7 @@ section[tabindex="-1"]:focus {
   border-radius: 6px;
   padding: 0.65rem 0.9rem;
   font-family: var(--mono);
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
@@ -477,7 +478,7 @@ section[tabindex="-1"]:focus {
   margin-top: 0.25rem;
   color: var(--text-muted);
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.78rem;
 }
 
 .availability i {
@@ -509,7 +510,7 @@ section[tabindex="-1"]:focus {
   margin-bottom: 0.3rem;
   color: var(--identity);
   font-family: var(--mono);
-  font-size: 0.67rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -519,7 +520,7 @@ section[tabindex="-1"]:focus {
   margin: 0;
   overflow-wrap: anywhere;
   color: var(--text-muted);
-  font-size: 0.82rem;
+  font-size: 0.94rem;
 }
 
 .profile-card__links {
@@ -534,7 +535,7 @@ section[tabindex="-1"]:focus {
   justify-content: center;
   color: var(--text-muted);
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
@@ -562,7 +563,7 @@ section[tabindex="-1"]:focus {
   display: block;
   color: var(--text-muted);
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -615,16 +616,20 @@ section[tabindex="-1"]:focus {
   padding-top: 1.5rem;
   color: var(--identity);
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
 }
 
-.case-study__content {
-  padding: 0.75rem 0 2rem;
+.case-study__header {
+  padding: 0.75rem 0 0;
 }
 
-.case-study__content h3 {
+.case-study__body {
+  padding: 0 0 2rem;
+}
+
+.case-study__header h3 {
   margin-top: 0.5rem;
   font-size: clamp(1.8rem, 9vw, 3rem);
 }
@@ -652,7 +657,7 @@ section[tabindex="-1"]:focus {
 .case-study__facts dd {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.85rem;
+  font-size: 0.94rem;
   line-height: 1.65;
 }
 
@@ -685,7 +690,7 @@ section[tabindex="-1"]:focus {
   padding: 0.55rem 0.75rem;
   color: var(--text-muted);
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
@@ -693,7 +698,7 @@ section[tabindex="-1"]:focus {
   border-left: 1px solid var(--border);
 }
 
-.case-study__content > a {
+.case-study__body > a {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -701,13 +706,15 @@ section[tabindex="-1"]:focus {
   border-bottom: 1px solid var(--action);
   color: var(--action-hover);
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
 .product-preview {
-  min-height: 18rem;
-  align-self: stretch;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 24rem;
+  align-self: start;
   margin-bottom: 1rem;
   overflow: clip;
   border: 1px solid var(--border-strong);
@@ -745,7 +752,9 @@ section[tabindex="-1"]:focus {
 }
 
 .preview-window__bar span {
+  min-width: 0;
   margin-right: auto;
+  overflow-wrap: anywhere;
 }
 
 .preview-window__bar i {
@@ -969,7 +978,7 @@ section[tabindex="-1"]:focus {
   grid-row: 1 / span 3;
   color: var(--identity);
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -980,7 +989,7 @@ section[tabindex="-1"]:focus {
 .capability-grid p {
   margin-top: 0.65rem;
   color: var(--text-muted);
-  font-size: 0.88rem;
+  font-size: 0.94rem;
   line-height: 1.65;
 }
 
@@ -990,7 +999,7 @@ section[tabindex="-1"]:focus {
   padding-top: 0.65rem;
   color: var(--identity);
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   line-height: 1.55;
 }
 
@@ -1033,13 +1042,13 @@ section[tabindex="-1"]:focus {
 .more-work span {
   color: var(--identity);
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-weight: 700;
 }
 
 .more-work p {
   color: var(--text-muted);
-  font-size: 0.88rem;
+  font-size: 0.94rem;
   line-height: 1.65;
 }
 
@@ -1077,7 +1086,7 @@ section[tabindex="-1"]:focus {
   padding: 0.75rem;
   color: var(--text);
   font-family: var(--mono);
-  font-size: 0.76rem;
+  font-size: 0.85rem;
   font-weight: 700;
 }
 
@@ -1099,7 +1108,7 @@ section[tabindex="-1"]:focus {
 
 .contact__primary small {
   color: currentColor;
-  font-size: 0.62rem;
+  font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -1115,7 +1124,7 @@ section[tabindex="-1"]:focus {
   border-top: 1px solid var(--border);
   color: var(--text-muted);
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.78rem;
 }
 
 .site-footer a {
@@ -1132,7 +1141,7 @@ section[tabindex="-1"]:focus {
 .menu-toggle,
 .theme-toggle,
 .profile-card__links a,
-.case-study__content > a,
+.case-study__body > a,
 .contact__actions a,
 .site-footer a,
 .skip-link {
@@ -1148,7 +1157,7 @@ section[tabindex="-1"]:focus {
   .menu-toggle:hover,
   .theme-toggle:hover,
   .profile-card__links a:hover,
-  .case-study__content > a:hover,
+  .case-study__body > a:hover,
   .contact__actions a:hover,
   .site-footer a:hover {
     transform: translateY(-1px);
@@ -1167,7 +1176,7 @@ section[tabindex="-1"]:focus {
 .menu-toggle:focus-visible,
 .theme-toggle:focus-visible,
 .profile-card__links a:focus-visible,
-.case-study__content > a:focus-visible,
+.case-study__body > a:focus-visible,
 .contact__actions a:focus-visible,
 .site-footer a:focus-visible {
   transform: translateY(-1px);
@@ -1185,7 +1194,7 @@ section[tabindex="-1"]:focus {
 .menu-toggle:active,
 .theme-toggle:active,
 .profile-card__links a:active,
-.case-study__content > a:active,
+.case-study__body > a:active,
 .contact__actions a:active,
 .site-footer a:active {
   transform: translateY(0);
@@ -1195,6 +1204,43 @@ section[tabindex="-1"]:focus {
 .button--primary:active,
 .contact__actions .contact__primary:active {
   background-color: var(--action-hover);
+}
+
+@media (max-width: 26rem) {
+  .site-header {
+    padding-inline: 0.75rem;
+  }
+
+  .brand-mark span {
+    display: none;
+  }
+
+  .menu-toggle {
+    margin-left: 0.35rem;
+    padding-inline: 0.5rem;
+  }
+
+  .hero,
+  .case-study,
+  .section-heading,
+  .contact,
+  .profile-section__intro,
+  .more-work {
+    padding-inline: 0.75rem;
+  }
+
+  .profile-card__facts {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card__facts div:nth-child(odd) {
+    border-right: 0;
+  }
+
+  .capability-grid,
+  .work-empty {
+    margin-inline: 0.75rem;
+  }
 }
 
 @media (min-width: 46rem) {
@@ -1333,14 +1379,13 @@ section[tabindex="-1"]:focus {
 
   .case-study {
     grid-template-columns: 4rem minmax(0, 1fr) minmax(22rem, 0.9fr);
+    grid-template-areas:
+      "index header preview"
+      "index body preview";
   }
 
   .proof-strip {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .product-preview {
-    min-height: 22rem;
   }
 
   .hero {
@@ -1368,15 +1413,23 @@ section[tabindex="-1"]:focus {
   }
 
   .case-study__index {
+    grid-area: index;
     padding: 2rem 1rem 0 0;
     border-right: 1px solid var(--border);
   }
 
-  .case-study__content {
-    padding: 2rem clamp(1.5rem, 3vw, 3rem);
+  .case-study__header {
+    grid-area: header;
+    padding: 2rem clamp(1.5rem, 3vw, 3rem) 0;
   }
 
-  .product-preview {
+  .case-study__body {
+    grid-area: body;
+    padding: 0 clamp(1.5rem, 3vw, 3rem) 2rem;
+  }
+
+  .case-study .product-preview {
+    grid-area: preview;
     margin-block: 2rem;
   }
 

@@ -43,6 +43,18 @@ describe("visual system contract", () => {
     );
   });
 
+  it("bounds project previews to a landscape aspect ratio", () => {
+    expect(styles).toMatch(
+      /\.product-preview\s*\{[^}]*aspect-ratio: 16 \/ 10/s,
+    );
+    expect(styles).toMatch(/\.product-preview\s*\{[^}]*max-height: 24rem/s);
+    expect(styles).not.toContain("min-height: 22rem");
+  });
+
+  it("defines a narrow-layout guard for enlarged text and small screens", () => {
+    expect(styles).toContain("@media (max-width: 26rem)");
+  });
+
   it("keeps the small primary-contact label at full text contrast", () => {
     expect(styles).toMatch(
       /\.contact__primary small\s*\{[^}]*color: currentColor/s,
