@@ -30,12 +30,11 @@ describe("portfolio page", () => {
     expect(
       contactLinks.getByRole("link", { name: /email kahfi/i }),
     ).toHaveAttribute("href", "mailto:kahfiworks.id@gmail.com");
-    expect(contactLinks.getByRole("link", { name: "GitHub" })).toHaveAttribute(
-      "href",
-      "https://github.com/KVdz00",
-    );
     expect(
-      contactLinks.getByRole("link", { name: "LinkedIn" }),
+      contactLinks.getByRole("link", { name: "GitHub (opens in new tab)" }),
+    ).toHaveAttribute("href", "https://github.com/KVdz00");
+    expect(
+      contactLinks.getByRole("link", { name: "LinkedIn (opens in new tab)" }),
     ).toHaveAttribute(
       "href",
       "https://www.linkedin.com/in/muhammad-dzikrul-kahfi-0ba869386",

@@ -715,10 +715,20 @@ section[tabindex="-1"]:focus {
   aspect-ratio: 16 / 10;
   max-height: 24rem;
   align-self: start;
-  margin-bottom: 1rem;
   overflow: clip;
   border: 1px solid var(--border-strong);
   border-radius: 8px;
+}
+
+.project-preview-frame {
+  margin-bottom: 1rem;
+}
+
+.preview-caption {
+  margin-top: 0.55rem;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.72rem;
 }
 
 .preview-liquid {
@@ -1428,7 +1438,7 @@ section[tabindex="-1"]:focus {
     padding: 0 clamp(1.5rem, 3vw, 3rem) 2rem;
   }
 
-  .case-study .product-preview {
+  .case-study .project-preview-frame {
     grid-area: preview;
     margin-block: 2rem;
   }

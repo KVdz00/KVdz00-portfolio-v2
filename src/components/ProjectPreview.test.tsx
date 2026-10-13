@@ -15,4 +15,11 @@ describe("ProjectPreview", () => {
       expect(container.querySelector(`.${className}`)).toBeInTheDocument();
     },
   );
+
+  it("labels the visual as an illustrative preview, not a screenshot", () => {
+    const { container } = render(<ProjectPreview type="filsafit" />);
+    expect(container.querySelector(".preview-caption")).toHaveTextContent(
+      /illustrative preview/i,
+    );
+  });
 });

@@ -105,13 +105,19 @@ test("contact destinations remain verified", async ({ page }) => {
     contact.getByRole("link", { name: /kahfiworks\.id@gmail\.com/i }),
   ).toHaveAttribute("href", "mailto:kahfiworks.id@gmail.com");
   await expect(
-    contact.getByRole("link", { name: "LinkedIn", exact: true }),
+    contact.getByRole("link", {
+      name: "LinkedIn (opens in new tab)",
+      exact: true,
+    }),
   ).toHaveAttribute(
     "href",
     "https://www.linkedin.com/in/muhammad-dzikrul-kahfi-0ba869386",
   );
   await expect(
-    contact.getByRole("link", { name: "GitHub", exact: true }),
+    contact.getByRole("link", {
+      name: "GitHub (opens in new tab)",
+      exact: true,
+    }),
   ).toHaveAttribute("href", "https://github.com/KVdz00");
 });
 
