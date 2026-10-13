@@ -35,6 +35,25 @@ describe("public metadata", () => {
     }
   });
 
+  it("follows the light system preference on first visit when nothing is saved", () => {
+    window.localStorage.removeItem("kvdz00-portfolio-theme");
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn((query: string) => ({
+        matches: query.includes("light"),
+        media: query,
+      })),
+    );
+
+    try {
+      window.eval(themeBootScript);
+      expect(document.documentElement.dataset.theme).toBe("light");
+      expect(document.documentElement.style.colorScheme).toBe("light");
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it("defaults first paint to dark when theme storage cannot be read", () => {
     expect(themeBootScript).not.toBe("");
     const getItem = vi

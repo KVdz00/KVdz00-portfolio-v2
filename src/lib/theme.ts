@@ -7,6 +7,17 @@ const themeColors: Record<Theme, string> = {
   light: "#f6f8fa",
 };
 
+function readSystemTheme(): Theme {
+  try {
+    return typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+  } catch {
+    return "dark";
+  }
+}
+
 export function readInitialTheme(): Theme {
   if (typeof window === "undefined") {
     return "dark";
@@ -14,10 +25,14 @@ export function readInitialTheme(): Theme {
 
   try {
     const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
-    return saved === "light" || saved === "dark" ? saved : "dark";
+    if (saved === "light" || saved === "dark") {
+      return saved;
+    }
   } catch {
-    return "dark";
+    // Storage is unavailable; fall through to the system preference.
   }
+
+  return readSystemTheme();
 }
 
 export function applyTheme(theme: Theme): void {

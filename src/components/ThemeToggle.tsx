@@ -15,12 +15,13 @@ export function ThemeToggle() {
       className="theme-toggle"
       type="button"
       aria-label={`Switch to ${nextTheme} theme`}
+      title={`Switch to ${nextTheme} theme`}
       onClick={() => setTheme(nextTheme)}
     >
       {theme === "dark" ? (
-        <Moon aria-hidden="true" size={18} weight="bold" />
-      ) : (
         <Sun aria-hidden="true" size={18} weight="bold" />
+      ) : (
+        <Moon aria-hidden="true" size={18} weight="bold" />
       )}
     </button>
   );

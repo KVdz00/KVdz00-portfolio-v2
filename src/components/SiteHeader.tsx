@@ -43,27 +43,24 @@ export function SiteHeader() {
         <span>/ DZ00</span>
       </a>
 
-      <div className="header-actions">
-        <ThemeToggle />
-        <button
-          ref={menuToggleRef}
-          className="menu-toggle"
-          type="button"
-          aria-controls="primary-navigation"
-          aria-expanded={isMenuOpen}
-          aria-label={
-            isMenuOpen ? "Close, close navigation" : "Menu, open navigation"
-          }
-          onClick={() => setIsMenuOpen((open) => !open)}
-        >
-          {isMenuOpen ? (
-            <X aria-hidden="true" size={18} weight="bold" />
-          ) : (
-            <List aria-hidden="true" size={18} weight="bold" />
-          )}
-          <span>{isMenuOpen ? "Close" : "Menu"}</span>
-        </button>
-      </div>
+      <button
+        ref={menuToggleRef}
+        className="menu-toggle"
+        type="button"
+        aria-controls="primary-navigation"
+        aria-expanded={isMenuOpen}
+        aria-label={
+          isMenuOpen ? "Close, close navigation" : "Menu, open navigation"
+        }
+        onClick={() => setIsMenuOpen((open) => !open)}
+      >
+        {isMenuOpen ? (
+          <X aria-hidden="true" size={18} weight="bold" />
+        ) : (
+          <List aria-hidden="true" size={18} weight="bold" />
+        )}
+        <span>{isMenuOpen ? "Close" : "Menu"}</span>
+      </button>
 
       <nav
         id="primary-navigation"
@@ -76,6 +73,8 @@ export function SiteHeader() {
           </a>
         ))}
       </nav>
+
+      <ThemeToggle />
     </header>
   );
 }
