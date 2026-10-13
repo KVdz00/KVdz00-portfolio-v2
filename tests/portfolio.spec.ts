@@ -3,7 +3,7 @@ import { expect, test, type Page } from "@playwright/test";
 const navigationLinks = [
   ["Work", "#work"],
   ["Capabilities", "#capabilities"],
-  ["Profile", "#profile"],
+  ["Profile / More work", "#profile"],
   ["Contact", "#contact"],
 ] as const;
 
@@ -25,7 +25,7 @@ function cssTimeToMilliseconds(duration: string) {
 async function openNavigationOnMobile(page: Page, projectName: string) {
   if (projectName === "mobile-chromium") {
     await page
-      .getByRole("button", { name: "Menu, open navigation", exact: true })
+      .getByRole("button", { name: "Open primary navigation", exact: true })
       .click();
   }
 }
@@ -159,11 +159,11 @@ test("mobile menu supports Menu and Close keyboard behavior", async ({
   await page.goto("/");
 
   const menu = page.locator('button[aria-controls="primary-navigation"]');
-  await expect(menu).toHaveAccessibleName("Menu, open navigation");
+  await expect(menu).toHaveAccessibleName("Open primary navigation");
   await menu.focus();
   await page.keyboard.press("Enter");
   await expect(menu).toHaveAttribute("aria-expanded", "true");
-  await expect(menu).toHaveAccessibleName("Close, close navigation");
+  await expect(menu).toHaveAccessibleName("Close primary navigation");
   await expect(menu).toHaveText("Close");
 
   await page.keyboard.press("Tab");
@@ -175,6 +175,66 @@ test("mobile menu supports Menu and Close keyboard behavior", async ({
   await page.keyboard.press("Escape");
   await expect(menu).toHaveAttribute("aria-expanded", "false");
   await expect(menu).toBeFocused();
+});
+
+test("mobile menu resets after crossing the desktop breakpoint", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "mobile-chromium",
+    "mobile-only behavior",
+  );
+  await page.goto("/");
+
+  const menu = page.locator('button[aria-controls="primary-navigation"]');
+  await menu.click();
+  await expect(menu).toHaveAttribute("aria-expanded", "true");
+
+  await page.setViewportSize({ width: 900, height: 844 });
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  await expect(menu).toHaveAttribute("aria-expanded", "false");
+  await expect(menu).toHaveAccessibleName("Open primary navigation");
+});
+
+test("mobile navigation choice keeps the destination in view", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "mobile-chromium",
+    "mobile-only behavior",
+  );
+  await page.goto("/");
+
+  const menu = page.locator('button[aria-controls="primary-navigation"]');
+  await menu.focus();
+  await page.keyboard.press("Enter");
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Enter");
+
+  await expect(page).toHaveURL(/#work$/);
+  await expect(page.locator("#work")).toBeFocused();
+});
+
+test("sticky navigation marks the current section", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== "desktop-chromium",
+    "desktop-only behavior",
+  );
+  await page.goto("/");
+
+  const navigation = page.getByRole("navigation", {
+    name: "Primary navigation",
+    exact: true,
+  });
+  const contact = navigation.getByRole("link", {
+    name: "Contact",
+    exact: true,
+  });
+  await contact.click();
+  await expect(contact).toHaveAttribute("aria-current", "location");
 });
 
 test("loads without console or page errors", async ({ page }) => {

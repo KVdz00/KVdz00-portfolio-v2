@@ -5,6 +5,7 @@ export function Capabilities() {
     <section
       className="capabilities"
       id="capabilities"
+      tabIndex={-1}
       aria-labelledby="capabilities-title"
     >
       <header className="section-heading">

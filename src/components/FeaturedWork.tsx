@@ -11,7 +11,12 @@ export function FeaturedWork({
   projects?: readonly FeaturedProjectData[];
 }) {
   return (
-    <section className="featured-work" id="work" aria-labelledby="work-title">
+    <section
+      className="featured-work"
+      id="work"
+      tabIndex={-1}
+      aria-labelledby="work-title"
+    >
       <header className="section-heading">
         <p className="section-kicker">Selected work / 2026</p>
         <h2 id="work-title">Projects that show how I build.</h2>
