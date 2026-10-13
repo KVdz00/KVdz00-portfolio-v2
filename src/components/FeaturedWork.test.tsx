@@ -31,6 +31,21 @@ describe("FeaturedWork", () => {
     }
   });
 
+  it("places the project visual before the detailed facts in reading order", () => {
+    render(<FeaturedWork />);
+
+    for (const article of screen.getAllByRole("article")) {
+      const preview = article.querySelector(".product-preview");
+      const facts = article.querySelector(".case-study__facts");
+      expect(preview).not.toBeNull();
+      expect(facts).not.toBeNull();
+      expect(
+        preview!.compareDocumentPosition(facts!) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBeTruthy();
+    }
+  });
+
   it("does not render project actions without verified URLs", () => {
     render(<FeaturedWork />);
     expect(

@@ -9,11 +9,13 @@ export function ProjectCaseStudy({
   return (
     <article className="case-study" aria-labelledby={`${project.slug}-title`}>
       <div className="case-study__index">{project.id}</div>
-      <div className="case-study__content">
+      <div className="case-study__header">
         <p className="section-kicker">Featured work</p>
         <h3 id={`${project.slug}-title`}>{project.name}</h3>
         <p className="case-study__summary">{project.summary}</p>
-
+      </div>
+      <ProjectPreview type={project.preview} />
+      <div className="case-study__body">
         <dl className="case-study__facts">
           <div>
             <dt>Context</dt>
@@ -22,6 +24,10 @@ export function ProjectCaseStudy({
           <div>
             <dt>My role</dt>
             <dd>{project.role}</dd>
+          </div>
+          <div>
+            <dt>Outcome</dt>
+            <dd>{project.outcome}</dd>
           </div>
           <div>
             <dt>Key contributions</dt>
@@ -43,10 +49,6 @@ export function ProjectCaseStudy({
               </ul>
             </dd>
           </div>
-          <div>
-            <dt>Outcome</dt>
-            <dd>{project.outcome}</dd>
-          </div>
         </dl>
 
         <ul
@@ -64,7 +66,6 @@ export function ProjectCaseStudy({
           </a>
         ) : null}
       </div>
-      <ProjectPreview type={project.preview} />
     </article>
   );
 }
