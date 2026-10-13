@@ -12,5 +12,12 @@ const projectPreviews = {
 
 export function ProjectPreview({ type }: { type: ProjectPreviewKey }) {
   const Preview = projectPreviews[type];
-  return <Preview />;
+  return (
+    <div className="project-preview-frame">
+      <Preview />
+      <p className="preview-caption">
+        Illustrative preview — a design mockup, not a product screenshot.
+      </p>
+    </div>
+  );
 }

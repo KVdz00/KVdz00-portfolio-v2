@@ -62,7 +62,7 @@ export function ProjectCaseStudy({
 
         {project.href ? (
           <a href={project.href} target="_blank" rel="noreferrer">
-            Visit project
+            Visit project <span className="sr-only">(opens in new tab)</span>
           </a>
         ) : null}
       </div>

@@ -14,7 +14,7 @@ export function ProfileCard({ profile }: { profile: Profile }) {
         ) : (
           <img
             src="/profile-avatar.png"
-            alt={profile.name}
+            alt=""
             onError={() => setAvatarFailed(true)}
           />
         )}
@@ -46,10 +46,10 @@ export function ProfileCard({ profile }: { profile: Profile }) {
       </dl>
       <div className="profile-card__links">
         <a href={profile.github} target="_blank" rel="noreferrer">
-          GitHub
+          GitHub <span className="sr-only">(opens in new tab)</span>
         </a>
         <a href={profile.linkedin} target="_blank" rel="noreferrer">
-          LinkedIn
+          LinkedIn <span className="sr-only">(opens in new tab)</span>
         </a>
       </div>
     </aside>

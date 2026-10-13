@@ -33,11 +33,11 @@ export function Contact() {
         </a>
         <a href={profile.linkedin} target="_blank" rel="noreferrer">
           <LinkedinLogo aria-hidden="true" size={20} weight="bold" />
-          LinkedIn
+          LinkedIn <span className="sr-only">(opens in new tab)</span>
         </a>
         <a href={profile.github} target="_blank" rel="noreferrer">
           <GithubLogo aria-hidden="true" size={20} weight="bold" />
-          GitHub
+          GitHub <span className="sr-only">(opens in new tab)</span>
         </a>
       </div>
     </section>

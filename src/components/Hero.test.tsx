@@ -26,10 +26,11 @@ describe("recruiter introduction", () => {
   });
 
   it("replaces a failed local avatar with the KV monogram", () => {
-    render(<Hero />);
-    fireEvent.error(
-      screen.getByRole("img", { name: /muhammad dzikrul kahfi/i }),
-    );
+    const { container } = render(<Hero />);
+    const avatar = container.querySelector('img[src="/profile-avatar.png"]');
+    expect(avatar).toBeInTheDocument();
+    expect(avatar).toHaveAttribute("alt", "");
+    fireEvent.error(avatar!);
     expect(screen.getByText("KV")).toBeInTheDocument();
   });
 
